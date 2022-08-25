@@ -48,7 +48,7 @@
                 </option>
                 <option>
                     <name>RunToEnable</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>RunToName</name>
@@ -88,7 +88,7 @@
                 </option>
                 <option>
                     <name>OCLastSavedByProductVersion</name>
-                    <state>9.30.1.50052</state>
+                    <state>9.20.4.46976</state>
                 </option>
                 <option>
                     <name>UseFlashLoader</name>
@@ -112,7 +112,7 @@
                 </option>
                 <option>
                     <name>FlashLoadersV3</name>
-                    <state>$TOOLKIT_DIR$/config/flashloader/TexasInstruments/FlashTC4_NC.board</state>
+                    <state>$TOOLKIT_DIR$\config\flashloader\TexasInstruments\FlashTC4_NC.board</state>
                 </option>
                 <option>
                     <name>OCImagesSuppressCheck1</name>
@@ -1018,7 +1018,7 @@
                 <option>
                     <name>CCLmiftdiResetList</name>
                     <version>0</version>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
             </data>
         </settings>
@@ -1417,7 +1417,7 @@
                 </option>
                 <option>
                     <name>CCXds100ResetList</name>
-                    <version>0</version>
+                    <version>1</version>
                     <state>0</state>
                 </option>
                 <option>

@@ -1,8 +1,8 @@
 //*****************************************************************************
 //
-// blinky.c - Simple example to blink the on-board LED.
+// project0.c - Example to demonstrate minimal TivaWare setup
 //
-// Copyright (c) 2013-2020 Texas Instruments Incorporated.  All rights reserved.
+// Copyright (c) 2012-2020 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
 // 
 // Texas Instruments (TI) is supplying this software for use solely and
@@ -24,20 +24,30 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "inc/hw_types.h"
 #include "inc/hw_memmap.h"
-#include "driverlib/debug.h"
-#include "driverlib/gpio.h"
 #include "driverlib/sysctl.h"
+#include "driverlib/gpio.h"
+
+//*****************************************************************************
+//
+// Define pin to LED mapping.
+//
+//*****************************************************************************
 
 //*****************************************************************************
 //
 //! \addtogroup example_list
-//! <h1>Blinky (blinky)</h1>
+//! <h1>Project Zero (project0)</h1>
 //!
-//! A very simple example that blinks the on-board LED using direct register
-//! access.
+//! This example demonstrates the use of TivaWare to setup the clocks and
+//! toggle GPIO pins to make the LED blink. This is a good place to start
+//! understanding your launchpad and the tools that can be used to program it.
 //
 //*****************************************************************************
+
+#define USER_LED1  GPIO_PIN_0
+#define USER_LED2  GPIO_PIN_1
 
 //*****************************************************************************
 //
@@ -48,13 +58,12 @@
 void
 __error__(char *pcFilename, uint32_t ui32Line)
 {
-    while(1);
 }
 #endif
 
 //*****************************************************************************
 //
-// Blink the on-board LED.
+// Main 'C' Language entry point.  Toggle an LED using TivaWare.
 //
 //*****************************************************************************
 int
@@ -73,32 +82,27 @@ main(void)
                                        SYSCTL_CFG_VCO_240), 120000000);
 
     //
-    // Enable the GPIO port that is used for the on-board LED.
+    // Enable and wait for the port to be ready for access
     //
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);
-
-    //
-    // Check if the peripheral access is enabled.
-    //
     while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION))
     {
     }
+    
+    //
+    // Configure the GPIO port for the LED operation.
+    //
+    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, (USER_LED1|USER_LED2));
 
     //
-    // Enable the GPIO pin for the LED (PN0).  Set the direction as output, and
-    // enable the GPIO pin for digital function.
-    //
-    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_0);
-
-    //
-    // Loop forever.
+    // Loop Forever
     //
     while(1)
     {
         //
-        // Turn on the LED.
+        // Turn on the LED
         //
-        GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
+        GPIOPinWrite(GPIO_PORTN_BASE, (USER_LED1|USER_LED2), USER_LED1);
 
         //
         // Delay for a bit
@@ -106,9 +110,9 @@ main(void)
         SysCtlDelay(ui32SysClock/6);
 
         //
-        // Turn off the LED.
+        // Turn on the LED
         //
-        GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, 0x0);
+        GPIOPinWrite(GPIO_PORTN_BASE, (USER_LED1|USER_LED2), USER_LED2);
 
         //
         // Delay for a bit

@@ -18,14 +18,14 @@
                     <analyzeTimeoutEnabled>1</analyzeTimeoutEnabled>
                     <analyzeTimeout>600</analyzeTimeout>
                     <enableParallel>1</enableParallel>
-                    <parallelThreads>6</parallelThreads>
+                    <parallelThreads>4</parallelThreads>
                     <enableFalsePositives>0</enableFalsePositives>
                     <messagesLimitEnabled>1</messagesLimitEnabled>
                     <messagesLimit>100</messagesLimit>
                     <outputDir>Debug/C-STAT</outputDir>
                 </cstatargs>
                 <cstat_settings>
-                    <cstat_version>2.4.1</cstat_version>
+                    <cstat_version>2.4.0</cstat_version>
                     <checks_tree>
                         <package name="STDCHECKS" enabled="true">
                             <group enabled="true" name="ARR">
@@ -1432,10 +1432,10 @@
     <group>
         <name>Source</name>
         <file>
-            <name>$PROJ_DIR$\blinky.c</name>
+            <name>$PROJ_DIR$\src\blinky.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\startup_ewarm.c</name>
+            <name>$PROJ_DIR$\src\startup_ewarm.c</name>
         </file>
     </group>
 </project>
