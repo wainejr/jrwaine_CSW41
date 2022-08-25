@@ -46,9 +46,6 @@
 //
 //*****************************************************************************
 
-#define USER_LED1  GPIO_PIN_0
-#define USER_LED2  GPIO_PIN_1
-
 //*****************************************************************************
 //
 // The error routine that is called if the driver library encounters an error.
@@ -61,6 +58,17 @@ __error__(char *pcFilename, uint32_t ui32Line)
 }
 #endif
 
+void
+PortJIntHandler(void)
+{
+    GPIOIntClear(GPIO_PORTJ_BASE, GPIO_PIN_0);
+    
+    int32_t SW0 = GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_0);
+    
+    if(SW0){ GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0); }
+    else{ GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1); }
+}
+
 //*****************************************************************************
 //
 // Main 'C' Language entry point.  Toggle an LED using TivaWare.
@@ -71,52 +79,45 @@ main(void)
 {
     uint32_t ui32SysClock;
 
-    //
     // Run from the PLL at 120 MHz.
-    // Note: SYSCTL_CFG_VCO_240 is a new setting provided in TivaWare 2.2.x and
-    // later to better reflect the actual VCO speed due to SYSCTL#22.
-    //
     ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
                                        SYSCTL_OSC_MAIN |
                                        SYSCTL_USE_PLL |
                                        SYSCTL_CFG_VCO_240), 120000000);
 
-    //
     // Enable and wait for the port to be ready for access
-    //
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);
-    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION))
-    {
-    }
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION));
     
-    //
     // Configure the GPIO port for the LED operation.
-    //
-    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, (USER_LED1|USER_LED2));
+    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_1);
+    
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOJ);
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOJ));
+    
+    GPIOIntRegister(GPIO_PORTJ_BASE, PortJIntHandler);
+    
+    GPIOPinTypeGPIOInput(GPIO_PORTJ_BASE, GPIO_PIN_0);
 
-    //
+    GPIOIntTypeSet(GPIO_PORTJ_BASE, GPIO_PIN_0, GPIO_BOTH_EDGES);
+    
+    GPIOPadConfigSet(GPIO_PORTJ_BASE, GPIO_PIN_0, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
+    
+    GPIOIntEnable(GPIO_PORTJ_BASE, GPIO_PIN_0);
+    
     // Loop Forever
-    //
     while(1)
     {
-        //
         // Turn on the LED
-        //
-        GPIOPinWrite(GPIO_PORTN_BASE, (USER_LED1|USER_LED2), USER_LED1);
+        //GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
 
-        //
         // Delay for a bit
-        //
-        SysCtlDelay(ui32SysClock/6);
+        //SysCtlDelay(ui32SysClock/6);
 
-        //
-        // Turn on the LED
-        //
-        GPIOPinWrite(GPIO_PORTN_BASE, (USER_LED1|USER_LED2), USER_LED2);
+        // Turn off the LED
+        //GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
 
-        //
         // Delay for a bit
-        //
-        SysCtlDelay(ui32SysClock/6);
+        //SysCtlDelay(ui32SysClock/6);
     }
 }
