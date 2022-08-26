@@ -28,6 +28,8 @@
 #include "inc/hw_memmap.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/gpio.h"
+#include "driverlib/systick.h"
+#include "driverlib/timer.h"
 
 //*****************************************************************************
 //
@@ -63,10 +65,24 @@ PortJIntHandler(void)
 {
     GPIOIntClear(GPIO_PORTJ_BASE, GPIO_PIN_0);
     
-    int32_t SW0 = GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_0);
+    if(GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_0)){ GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0); }
+}
+
+void
+SysTickHandler(void)
+{
+    SysTickDisable();
     
-    if(SW0){ GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0); }
-    else{ GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1); }
+    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+}
+
+
+void
+Timer0IntHandler(void)
+{
+    TimerIntClear(TIMER0_BASE, TIMER_TIMA_MATCH);
+    
+    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
 }
 
 //*****************************************************************************
@@ -104,6 +120,25 @@ main(void)
     GPIOPadConfigSet(GPIO_PORTJ_BASE, GPIO_PIN_0, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
     
     GPIOIntEnable(GPIO_PORTJ_BASE, GPIO_PIN_0);
+    
+    SysTickPeriodSet(16777216);
+    
+    SysTickIntEnable();
+    
+    SysTickEnable();
+    
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER0));
+    
+    TimerConfigure(TIMER0_BASE, TIMER_CFG_ONE_SHOT_UP);
+    
+    TimerMatchSet(TIMER0_BASE, TIMER_A, 360000000);
+    
+    TimerIntRegister(TIMER0_BASE, TIMER_A, Timer0IntHandler);
+    
+    TimerIntEnable(TIMER0_BASE, TIMER_TIMA_MATCH);
+    
+    TimerEnable(TIMER0_BASE, TIMER_A);
     
     // Loop Forever
     while(1)
