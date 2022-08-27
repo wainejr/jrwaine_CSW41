@@ -22,6 +22,7 @@
 //
 //*****************************************************************************
 
+#include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include "inc/hw_types.h"
@@ -31,11 +32,7 @@
 #include "driverlib/systick.h"
 #include "driverlib/timer.h"
 
-//*****************************************************************************
-//
-// Define pin to LED mapping.
-//
-//*****************************************************************************
+#define MAX_SYSTICK 16777216
 
 //*****************************************************************************
 //
@@ -47,6 +44,8 @@
 //! understanding your launchpad and the tools that can be used to program it.
 //
 //*****************************************************************************
+
+volatile uint32_t ui32TimerValue = 0;
 
 //*****************************************************************************
 //
@@ -60,99 +59,151 @@ __error__(char *pcFilename, uint32_t ui32Line)
 }
 #endif
 
-void
-PortJIntHandler(void)
-{
-    GPIOIntClear(GPIO_PORTJ_BASE, GPIO_PIN_0);
-    
-    if(GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_0)){ GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0); }
-}
-
+// SysTick Interrupt handler
 void
 SysTickHandler(void)
 {
+    // Disables the SysTick counter
     SysTickDisable();
     
+    // Turn on the User Led 1.
     GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
+    
+    // Enables the TIMER 0.
+    TimerEnable(TIMER0_BASE, TIMER_A);
+    
+    // Enables the GPIO Port J interrupts.
+    GPIOIntEnable(GPIO_PORTJ_BASE, GPIO_INT_PIN_0);
 }
 
+// Port J Interrupt handler
+void
+PortJIntHandler(void)
+{   
+    // Disables the TIMER 0.
+    TimerDisable(TIMER0_BASE, TIMER_A);
+    
+    // Gets the current TIMER 0 value.
+    ui32TimerValue = TimerValueGet(TIMER0_BASE, TIMER_A);
+    
+    // Removes the interrupt handler for the GPIO Port J and disables the GPIO port J interrupt in the interrupt controller.
+    GPIOIntUnregister(GPIO_PORTJ_BASE);
+    
+    // Removes the interrupt handler for the TIMER 0 and disables the TIMER 0 interrupt in the interrupt controller.
+    TimerIntUnregister(TIMER0_BASE, TIMER_A);
+    
+    // Turn off the User Led 1.
+    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
+}
 
+// Timer Interrupt handler
 void
 Timer0IntHandler(void)
-{
-    TimerIntClear(TIMER0_BASE, TIMER_TIMA_MATCH);
+{   
+    // Disables the TIMER 0.
+    TimerDisable(TIMER0_BASE, TIMER_A);
     
+    // Gets the current TIMER 0 value.
+    ui32TimerValue = TimerValueGet(TIMER0_BASE, TIMER_A);
+    
+    // Removes the interrupt handler for the GPIO Port J and disables the GPIO port J interrupt in the interrupt controller.
+    GPIOIntUnregister(GPIO_PORTJ_BASE);
+    
+    // Removes the interrupt handler for the TIMER 0 and disables the TIMER 0 interrupt in the interrupt controller.
+    TimerIntUnregister(TIMER0_BASE, TIMER_A);
+    
+    // Turn off the User Led 1.
     GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
 }
 
 //*****************************************************************************
 //
-// Main 'C' Language entry point.  Toggle an LED using TivaWare.
+// Main 'C' Language entry point.
 //
 //*****************************************************************************
 int
 main(void)
 {
-    uint32_t ui32SysClock;
-
     // Run from the PLL at 120 MHz.
-    ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
+    uint32_t ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
                                        SYSCTL_OSC_MAIN |
                                        SYSCTL_USE_PLL |
                                        SYSCTL_CFG_VCO_240), 120000000);
 
-    // Enable and wait for the port to be ready for access
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);
-    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION));
-    
-    // Configure the GPIO port for the LED operation.
-    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_1);
-    
+    // Enable GPIO Port J (User Switchs 1 & 2) peripheral.
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOJ);
+    
+    // Enable TIMER 0 peripheral.
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
+    
+    // Enable GPIO Port N (User Leds 1 & 2) peripheral.
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);
+    
+    // Wait for GPIO Port J to be ready.
     while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOJ));
     
-    GPIOIntRegister(GPIO_PORTJ_BASE, PortJIntHandler);
+    // Configure the user switch 1.
     
+    // Configures pin 0 (User Switch 1) of the Port J for use as GPIO input.
     GPIOPinTypeGPIOInput(GPIO_PORTJ_BASE, GPIO_PIN_0);
-
-    GPIOIntTypeSet(GPIO_PORTJ_BASE, GPIO_PIN_0, GPIO_BOTH_EDGES);
     
+    // Set the pull up resistor to 2 amps on pin 0 of the Port J.
     GPIOPadConfigSet(GPIO_PORTJ_BASE, GPIO_PIN_0, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
     
-    GPIOIntEnable(GPIO_PORTJ_BASE, GPIO_PIN_0);
+    // Sets the interrupt type for the rising edge on pin 0 of the Port J.
+    GPIOIntTypeSet(GPIO_PORTJ_BASE, GPIO_PIN_0, GPIO_RISING_EDGE);
     
-    SysTickPeriodSet(16777216);
+    // Registers an interrupt handler for the GPIO port J.
+    GPIOIntRegister(GPIO_PORTJ_BASE, PortJIntHandler);
     
-    SysTickIntEnable();
-    
-    SysTickEnable();
-    
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
+    // Wait for TIMER 0 to be ready.
     while(!SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER0));
     
+    // Configure the timer 0.
+    
+    // Set the timer to 0 in one shot mode counting up full-width.
     TimerConfigure(TIMER0_BASE, TIMER_CFG_ONE_SHOT_UP);
     
-    TimerMatchSet(TIMER0_BASE, TIMER_A, 360000000);
+    // Sets timer matching value to 3 times the frequency value (3 seconds)
+    TimerMatchSet(TIMER0_BASE, TIMER_A, ui32SysClock * 3);
     
+    // Registers an interrupt handler for Timer 0.
     TimerIntRegister(TIMER0_BASE, TIMER_A, Timer0IntHandler);
     
-    TimerIntEnable(TIMER0_BASE, TIMER_TIMA_MATCH);
+    // Enable interrupt source for timer 0 in timer match mode.
+    TimerIntEnable(TIMER0_BASE, TIMER_TIMA_MATCH);  
     
-    TimerEnable(TIMER0_BASE, TIMER_A);
+    // Wait for GPIO Port N to be ready.
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION));
     
-    // Loop Forever
+     // Configure the user led 1.
+    
+    // Configures pin 1 (User Led 1) of the Port N for use as GPIO output.
+    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_1);
+    
+    // Configure the SysTick.
+    
+    // Sets the SysTick counter period to its maximum value (2^32).
+    SysTickPeriodSet(MAX_SYSTICK);  
+    
+    // Enables the SysTick interrupt.
+    SysTickIntEnable();
+    
+    // Enables the SysTick counter.
+    SysTickEnable();
+    
+    // Sets the count reference value.
+    ui32TimerValue = 0;
+    
+    // Busy waiting on timer value.
     while(1)
     {
-        // Turn on the LED
-        //GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
-
-        // Delay for a bit
-        //SysCtlDelay(ui32SysClock/6);
-
-        // Turn off the LED
-        //GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
-
-        // Delay for a bit
-        //SysCtlDelay(ui32SysClock/6);
+        if(ui32TimerValue)
+        {
+            // Prints the value in clocks and the corresponding value in milliseconds.
+            printf("%d clocks\n", ui32TimerValue);
+            printf("%d ms\n", ui32TimerValue/(ui32SysClock/1000));
+            break;
+        }
     }
 }
