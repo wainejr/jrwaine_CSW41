@@ -22,17 +22,23 @@
 //
 //*****************************************************************************
 
-#include <stdio.h>
-#include <stdint.h>
 #include <stdbool.h>
-#include "inc/hw_types.h"
-#include "inc/hw_memmap.h"
-#include "driverlib/sysctl.h"
+#include <stdint.h>
+#include <stdio.h>
 #include "driverlib/gpio.h"
+#include "driverlib/interrupt.h"
+#include "driverlib/sysctl.h"
 #include "driverlib/systick.h"
 #include "driverlib/timer.h"
+#include "inc/hw_ints.h"
+#include "inc/hw_memmap.h"
+#include "inc/hw_types.h"
 
+// Define Max Value for SysTick.
 #define MAX_SYSTICK 16777216
+
+// Global variable to store timer time.
+volatile uint32_t ui32TimerValue;
 
 //*****************************************************************************
 //
@@ -44,8 +50,6 @@
 //! understanding your launchpad and the tools that can be used to program it.
 //
 //*****************************************************************************
-
-volatile uint32_t ui32TimerValue = 0;
 
 //*****************************************************************************
 //
@@ -154,7 +158,7 @@ main(void)
     GPIOIntTypeSet(GPIO_PORTJ_BASE, GPIO_PIN_0, GPIO_RISING_EDGE);
     
     // Registers an interrupt handler for the GPIO port J.
-    GPIOIntRegister(GPIO_PORTJ_BASE, PortJIntHandler);
+    IntEnable(INT_GPIOJ);
     
     // Wait for TIMER 0 to be ready.
     while(!SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER0));
@@ -164,11 +168,11 @@ main(void)
     // Set the timer to 0 in one shot mode counting up full-width.
     TimerConfigure(TIMER0_BASE, TIMER_CFG_ONE_SHOT_UP);
     
-    // Sets timer matching value to 3 times the frequency value (3 seconds)
+    // Sets timer matching value to 3 times the frequency value (3 seconds).
     TimerMatchSet(TIMER0_BASE, TIMER_A, ui32SysClock * 3);
     
     // Registers an interrupt handler for Timer 0.
-    TimerIntRegister(TIMER0_BASE, TIMER_A, Timer0IntHandler);
+    IntEnable(INT_TIMER0A);
     
     // Enable interrupt source for timer 0 in timer match mode.
     TimerIntEnable(TIMER0_BASE, TIMER_TIMA_MATCH);  
