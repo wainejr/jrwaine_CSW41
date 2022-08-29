@@ -11,7 +11,7 @@
             <name>General</name>
             <archiveVersion>3</archiveVersion>
             <data>
-                <version>35</version>
+                <version>34</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -53,16 +53,16 @@
                 <option>
                     <name>GRuntimeLibSelect</name>
                     <version>0</version>
-                    <state>2</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>GRuntimeLibSelectSlave</name>
                     <version>0</version>
-                    <state>2</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>RTDescription</name>
-                    <state>A complete configuration of the C/C++14 runtime library. Full locale interface, C locale, file descriptor support, multibytes in printf and scanf, and hex floats in strtod.</state>
+                    <state>Use the normal configuration of the C/C++ runtime library. No locale interface, C locale, no file descriptor support, no multibytes in printf and scanf, and no hex floats in strtod.</state>
                 </option>
                 <option>
                     <name>OGProductVersion</name>
@@ -70,7 +70,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>9.30.1.50052</state>
+                    <state>9.20.4.46976</state>
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
@@ -94,11 +94,11 @@
                 </option>
                 <option>
                     <name>RTConfigPath2</name>
-                    <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</state>
+                    <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>32</version>
+                    <version>31</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -115,7 +115,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>32</version>
+                    <version>31</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -138,7 +138,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>32</version>
+                    <version>31</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -202,14 +202,6 @@
                 <option>
                     <name>BuildFilesPath</name>
                     <state>Debug</state>
-                </option>
-                <option>
-                    <name>PointerAuthentication</name>
-                    <state>0</state>
-                </option>
-                <option>
-                    <name>FPU64</name>
-                    <state>1</state>
                 </option>
             </data>
         </settings>
@@ -683,7 +675,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>27</version>
+                <version>26</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -1042,14 +1034,6 @@
                 <option>
                     <name>IlinkWrapperFile</name>
                     <state></state>
-                </option>
-                <option>
-                    <name>IlinkProcessor</name>
-                    <state>1</state>
-                </option>
-                <option>
-                    <name>IlinkFpuProcessor</name>
-                    <state>1</state>
                 </option>
             </data>
         </settings>
