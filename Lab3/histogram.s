@@ -16,7 +16,7 @@ EightBitHistogram
         MOV     R1, #0                  ;R1 = 0
         ADD     R12, R3, #512           ;R12 = [p_histogram + 512]
         
-loop1   STR     R1, [R12, #-4]!         ;[R12] = 0
+loop1   STRH    R1, [R12, #-2]!         ;[R12] = 0
         CMP     R12, R3                 ;Compare [R12] with [p_histogram]
         BHI     loop1                   ;Branch to loop1 while [R12] > [p_histogram]
         
