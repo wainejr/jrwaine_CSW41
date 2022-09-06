@@ -17,12 +17,11 @@ int main()
         std::cout << "val count" << std::endl;
         for(uint16_t i = 0; i < 256; i++)
         {
-            if(histogram[i])
-            {
-                std::cout << std::right << std::setw(3) << i << " " << std::setw(5) << histogram[i] << std::endl;
-            }
+            std::cout << std::right << std::setw(3) << i << " " 
+                << std::setw(5) << histogram[i] << std::endl;
         }
     }
+    std::cout << std::flush;
     
   return 0;
 }

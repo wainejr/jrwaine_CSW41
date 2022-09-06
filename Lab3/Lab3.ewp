@@ -2145,6 +2145,6 @@
         <name>$PROJ_DIR$\histogram.s</name>
     </file>
     <file>
-        <name>$PROJ_DIR$\main.cpp</name>
+        <name>$PROJ_DIR$\lab3.cpp</name>
     </file>
 </project>
