@@ -8,7 +8,7 @@ int main()
 {
     uint16_t histogram[256];
   
-    uint16_t processed_pixels = EightBitHistogram(width1, height1, p_start_image1, histogram);
+    uint16_t processed_pixels = EightBitHistogram(width0, height0, p_start_image0, histogram);
 
     std::cout << "processed_pixels " << processed_pixels << std::endl << std::endl;
     
@@ -20,6 +20,8 @@ int main()
             std::cout << std::right << std::setw(3) << i << " " 
                 << std::setw(5) << histogram[i] << std::endl;
         }
+    } else {
+        std::cout << "Unable to process image" << std::endl;
     }
     std::cout << std::flush;
     
