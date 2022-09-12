@@ -64,7 +64,7 @@ int main()
     
     processed_pixels = EightBitHistogram(width0, height0, p_start_image0, histogram);
     
-    std::cout << std::endl << "Test Case 1: " << std::endl << std::endl;
+    std::cout << std::endl << "Test Case 0: " << std::endl << std::endl;
     
     showHistogram(processed_pixels, histogram, 0);
     
