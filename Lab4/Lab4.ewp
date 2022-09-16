@@ -15,6 +15,10 @@
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
+                    <name>FPU64</name>
+                    <state>1</state>
+                </option>
+                <option>
                     <name>BrowseInfoPath</name>
                     <state>Debug\BrowseInfo</state>
                 </option>
@@ -70,11 +74,11 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>9.30.1.0</state>
+                    <state>9.30.1.50052</state>
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state></state>
+                    <state>Default	None</state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -120,7 +124,7 @@
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state></state>
+                    <state>Default	None</state>
                 </option>
                 <option>
                     <name>FPU2</name>
@@ -331,7 +335,7 @@
                 </option>
                 <option>
                     <name>OutputFile</name>
-                    <state></state>
+                    <state>$FILE_BNAME$.o</state>
                 </option>
                 <option>
                     <name>CCLibConfigHeader</name>
@@ -343,7 +347,8 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state></state>
+                    <state>$PROJ_DIR$\..</state>
+                    <state>$PROJ_DIR$\..\..\TivaWare_C_Series-2.2.0.295</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1080,6 +1085,10 @@
                 <version>35</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
+                <option>
+                    <name>FPU64</name>
+                    <state>1</state>
+                </option>
                 <option>
                     <name>BrowseInfoPath</name>
                     <state>Release\BrowseInfo</state>
@@ -2133,6 +2142,9 @@
             </data>
         </settings>
     </configuration>
+    <file>
+        <name>$PROJ_DIR$\defines.h</name>
+    </file>
     <file>
         <name>$PROJ_DIR$\main.cpp</name>
     </file>
