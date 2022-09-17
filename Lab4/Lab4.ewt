@@ -1440,8 +1440,5 @@
         <file>
             <name>$PROJ_DIR$\src\startup_ewarm.c</name>
         </file>
-        <file>
-            <name>$PROJ_DIR$\src\startup_TM4C1294.s</name>
-        </file>
     </group>
 </project>
