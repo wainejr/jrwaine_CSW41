@@ -4,7 +4,8 @@
 
 #include "defines.h"
 
-int main()
-{
-  return 0;
-}
+/**
+*   @brief 
+*   
+*/
+void setupIOs();

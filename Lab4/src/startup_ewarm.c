@@ -43,6 +43,9 @@ void ResetISR(void);
 static void NmiSR(void);
 static void FaultISR(void);
 static void IntDefaultHandler(void);
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
 
 //*****************************************************************************
 //
