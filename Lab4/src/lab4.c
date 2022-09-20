@@ -22,7 +22,8 @@ int main()
     int32_t val_ver = readJoystickVer();
     int32_t val_sel = readJoystickSelect();
 
-    printf("values hor %d ver %d sel %d\n", val_hor, val_ver, val_sel);
+    UARTprintf("values hor %d ver %d sel %d\n", val_hor, val_ver, val_sel);
+    break;
   }
   // readJoystickHor();
   // readJoystickVer();

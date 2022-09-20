@@ -5,6 +5,8 @@
 #include "driverlib/pwm.h"
 #include "driverlib/pin_map.h"
 #include "driverlib/sysctl.h"
+#include "driverlib/uart.h"
+#include "utils/uartstdio.h"
 #include "inc/hw_memmap.h"
 
 // Joystick defines

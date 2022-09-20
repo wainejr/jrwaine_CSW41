@@ -19,11 +19,37 @@ void activateLEDGPIOs(){
     GPIOPinTypeGPIOOutput(GPIO_LED_BASE, GPIO_LED_B_PORT);
 
     // PWMClockSet(PWM0_BASE, PWM_SYSCLK_DIV_8);
+    UARTprintf("setup LED!\n");
 }
 
-void activateUART0(){
-    // printf("activating UART0...\n");
+/**
+*   @brief  This functions setups UART0 to be used as the console output through 
+*           function `UARTprintf`. This function is based on the examples from TivaWare
+*/
+void
+setupUART0(void)
+{
+    // Enable GPIO port A which is used for UART0 pins.
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
 
+    // Configure the pin muxing for UART0 functions on port A0 and A1.
+    // This step is not necessary if your part does not support pin muxing.
+    GPIOPinConfigure(GPIO_PA0_U0RX);
+    GPIOPinConfigure(GPIO_PA1_U0TX);
+
+    // Enable UART0 so that we can configure the clock.
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
+
+    // Use the internal 16MHz oscillator as the UART clock source.
+    UARTClockSourceSet(UART0_BASE, UART_CLOCK_PIOSC);
+
+    // Select the alternate (UART) function for these pins.
+    GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+
+    // Initialize the UART for console I/O.
+    UARTStdioConfig(0, 115200, 16000000);
+ 
+    UARTprintf("setup UART!\n");
 }
 
 void activateJoystickGPIOs(){
@@ -40,11 +66,12 @@ void activateJoystickGPIOs(){
     GPIOPinTypeGPIOInput(GPIO_JOYSTICK_ANALOG_BASE, GPIO_JOYSTICK_HOR);
     GPIOPinTypeGPIOInput(GPIO_JOYSTICK_ANALOG_BASE, GPIO_JOYSTICK_VER);
     GPIOPinTypeGPIOInput(GPIO_JOYSTICK_DIGITAL_BASE, GPIO_JOYSTICK_SEL);
+    UARTprintf("setup joystick IO...\n");
 }
 
 void setupIOs(){
+    setupUART0();
     activateLEDGPIOs();
-    activateUART0();
     activateJoystickGPIOs();
 }
 
