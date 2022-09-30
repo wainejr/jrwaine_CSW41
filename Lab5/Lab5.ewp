@@ -348,7 +348,9 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$\..\..\threadx\ports\cortex_m4\iar\inc</state>
-                    <state>$PROJ_DIR$\..\..\\threadx\common\inc</state>
+                    <state>$PROJ_DIR$\..\..\threadx\common\inc</state>
+                    <state>$PROJ_DIR$\..</state>
+                    <state>$PROJ_DIR$\..\..\TivaWare_C_Series-2.2.0.295</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
