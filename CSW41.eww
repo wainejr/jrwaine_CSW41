@@ -7,6 +7,12 @@
         <path>$WS_DIR$\..\TivaWare_C_Series-2.2.0.295\driverlib\driverlib.ewp</path>
     </project>
     <project>
+        <path>$WS_DIR$\..\threadx\ports\cortex_m4\iar\example_build\sample_threadx.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\..\threadx\ports\cortex_m4\iar\example_build\tx.ewp</path>
+    </project>
+    <project>
         <path>$WS_DIR$\..\TivaWare_C_Series-2.2.0.295\examples\boards\ek-tm4c1294xl\uart_echo\uart_echo.ewp</path>
     </project>
     <project>
@@ -20,6 +26,9 @@
     </project>
     <project>
         <path>$WS_DIR$\Lab4\Lab4.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\Lab5\Lab5.ewp</path>
     </project>
     <batchBuild />
 </workspace>
