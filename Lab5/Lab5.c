@@ -57,22 +57,24 @@ init_LED_D1(void)
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);
     
     // Wait for GPIO Port N to be ready.
-    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION));
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION))
+    {
+    }
     
     // Configures pin 1 (User Led 1) of the Port N for use as GPIO output.
-    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_1);
+    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_0);
 }
 
 
 void turnOnLED(){
     // Turn on the Led 1.
-    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x1);
+        GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
 }
 
 void turnOffLED(){
   
     // Turn off the Led 1.
-    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
+    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, 0x0);
 }
 
 
@@ -85,6 +87,11 @@ int main()
                                        SYSCTL_USE_PLL |
                                        SYSCTL_CFG_VCO_240), CLOCK_FREQ);
 
+    init_LED_D1();
+    turnOnLED();
+    turnOffLED();
+    turnOnLED();
+    turnOffLED();
 
     /* Enter the ThreadX kernel.  */
     tx_kernel_enter();
@@ -134,7 +141,7 @@ void    thread_0_entry(ULONG thread_input)
         turnOnLED();        
         
         /* Sleep for 1 second.  */
-        tx_thread_sleep(CLOCK_FREQ);
+        tx_thread_sleep(10);
         
         turnOffLED();
 
