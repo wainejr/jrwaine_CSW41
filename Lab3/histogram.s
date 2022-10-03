@@ -7,8 +7,8 @@
 EightBitHistogram                       ; uint16_t width, uint16_t height, uint8_t const* p_image, uint16_t * p_histogram
                                         ; R0: uint16_t width
                                         ; R1: uint16_t height
-                                        ; R2: uint8_t* p_image
-                                        ; R3: uint8_t* p_histogram
+                                        ; R2: uint8_t const* p_image
+                                        ; R3: uint16_t* p_histogram
         
         MUL     R0, R1                  ; R0 = R0 * R1
                                         

@@ -1435,28 +1435,7 @@
     <group>
         <name>Source</name>
         <file>
-            <name>$PROJ_DIR$\src\defines.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\src\joystick.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\src\joystick.h</name>
-        </file>
-        <file>
             <name>$PROJ_DIR$\src\lab4.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\src\led.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\src\led.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\src\setup.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\src\setup.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\src\startup_ewarm.c</name>

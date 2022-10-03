@@ -58,8 +58,8 @@ void showHistogram(uint16_t processed_pixels, uint16_t * p_histogram, uint8_t sh
 
 int main()
 {
-    uint16_t histogram[256];
-  
+    uint16_t* histogram = new uint16_t[256];
+
     uint16_t processed_pixels;
     
     processed_pixels = EightBitHistogram(width0, height0, p_start_image0, histogram);
