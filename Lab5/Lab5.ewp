@@ -2166,7 +2166,7 @@
     <group>
         <name>Src</name>
         <file>
-            <name>$PROJ_DIR$\sample_threadx.c</name>
+            <name>$PROJ_DIR$\Lab5.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\startup_ewarm.c</name>
