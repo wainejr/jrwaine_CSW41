@@ -7,9 +7,6 @@
         <path>$WS_DIR$\..\TivaWare_C_Series-2.2.0.295\driverlib\driverlib.ewp</path>
     </project>
     <project>
-        <path>$WS_DIR$\..\threadx\ports\cortex_m4\iar\example_build\sample_threadx.ewp</path>
-    </project>
-    <project>
         <path>$WS_DIR$\..\threadx\ports\cortex_m4\iar\example_build\tx.ewp</path>
     </project>
     <project>
