@@ -1,0 +1,92 @@
+/*###ICF### Section handled by ICF editor, don't touch! ****/
+/*-Editor annotation file-*/
+/* IcfEditorFile="$TOOLKIT_DIR$\config\ide\IcfEditor\cortex_v1_0.xml" */
+/*-Specials-*/
+define symbol __ICFEDIT_intvec_start__       = 0x00000000;
+/*-Memory Regions-*/
+define symbol __ICFEDIT_region_ROM_start__   = 0x00000000;
+define symbol __ICFEDIT_region_ROM_end__     = 0x000FFFFF;
+define symbol __ICFEDIT_region_RAM_start__   = 0x20000000;
+define symbol __ICFEDIT_region_RAM_end__     = 0x2003FFFF;
+/*-Sizes-*/
+define symbol __ICFEDIT_size_cstack__   = 0x8000;
+define symbol __ICFEDIT_size_heap__     = 0x10000;
+/**** End of ICF editor section. ###ICF###*/
+
+//******************************************************************
+// 1-Definition of Regions
+//******************************************************************
+
+//
+// Define a memory region that covers the entire 4 GB addressible space of the
+// processor.
+//
+define memory mem with size = 4G;
+
+//
+// Define a region for the on-chip flash.
+//
+define region FLASH = mem:[from __ICFEDIT_region_ROM_start__   to __ICFEDIT_region_ROM_end__];
+
+//
+// Define a region for the on-chip SRAM.
+//
+define region SRAM = mem:[from __ICFEDIT_region_RAM_start__   to __ICFEDIT_region_RAM_end__];
+
+//******************************************************************
+// 2-Definitions of Blocks
+//******************************************************************
+
+//
+// Define a block for the heap.  The size should be set to something other
+// than zero if things in the C library that require the heap are used.
+//
+define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };
+define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };
+
+define block RAM_bl with fixed order { section VTABLE, readwrite, block CSTACK, block HEAP, section FREE_MEM};
+
+//******************************************************************
+// 3-Initialization rules
+//******************************************************************
+
+//
+// Indicate that the read/write values should be initialized by copying from
+// flash.
+//
+initialize by copy { readwrite };
+
+//
+// Indicate that the noinit values should be left alone.  This includes the
+// stack, which if initialized will destroy the return address from the
+// initialization code, causing the processor to branch to zero and fault.
+//
+do not initialize { section .noinit };
+
+//******************************************************************
+// 4-FLASH placements
+//******************************************************************
+
+//
+// Place the interrupt vectors at the start of flash.
+//
+place at start of FLASH { readonly section .intvec };
+
+//
+// Place the remainder of the read-only items into flash.
+//
+place in FLASH { readonly };
+
+//******************************************************************
+// 5-RAM placements
+//******************************************************************
+
+//
+// Place the RAM vector table at the start of SRAM.
+//
+// place at start of SRAM { section VTABLE };
+
+//
+// Place all read/write items into SRAM.
+//
+place in SRAM {block RAM_bl};
