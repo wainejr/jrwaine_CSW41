@@ -30,7 +30,12 @@
 ;
 ;
 SYSTEM_CLOCK      EQU   120000000
+<<<<<<< Updated upstream
 SYSTICK_CYCLES    EQU   ((SYSTEM_CLOCK / 100) -1)
+=======
+TICKS_PER_SECOND  EQU   1000
+SYSTICK_CYCLES    EQU   ((SYSTEM_CLOCK / TICKS_PER_SECOND) -1)
+>>>>>>> Stashed changes
 
     RSEG    FREE_MEM:DATA
     PUBLIC  __tx_free_memory_start
