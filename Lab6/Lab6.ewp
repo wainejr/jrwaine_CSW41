@@ -230,10 +230,7 @@
                     <state>PART_TM4C1294NCPDT</state>
                     <state>TARGET_IS_TM4C129_RA1</state>
                     <state>TX_ENABLE_IAR_LIBRARY_SUPPORT</state>
-<<<<<<< Updated upstream
-=======
                     <state>TX_INCLUDE_USER_DEFINE_FILE</state>
->>>>>>> Stashed changes
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -655,11 +652,7 @@
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-<<<<<<< Updated upstream
                     <state>Lab6.srec</state>
-=======
-                    <state>Lab5.srec</state>
->>>>>>> Stashed changes
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -1003,11 +996,7 @@
                 </option>
                 <option>
                     <name>IlinkTrustzoneImportLibraryOut</name>
-<<<<<<< Updated upstream
                     <state>Lab6_import_lib.o</state>
-=======
-                    <state>Lab5_import_lib.o</state>
->>>>>>> Stashed changes
                 </option>
                 <option>
                     <name>OILinkExtraOption</name>
@@ -2181,11 +2170,7 @@
     <group>
         <name>Src</name>
         <file>
-<<<<<<< Updated upstream
-            <name>$PROJ_DIR$\lab6.c</name>
-=======
             <name>$PROJ_DIR$\Lab6.c</name>
->>>>>>> Stashed changes
         </file>
         <file>
             <name>$PROJ_DIR$\startup_ewarm.c</name>
@@ -2193,11 +2178,8 @@
         <file>
             <name>$PROJ_DIR$\tx_initialize_low_level.s</name>
         </file>
-<<<<<<< Updated upstream
-=======
         <file>
             <name>$PROJ_DIR$\tx_user.h</name>
         </file>
->>>>>>> Stashed changes
     </group>
 </project>
