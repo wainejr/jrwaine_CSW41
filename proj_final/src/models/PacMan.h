@@ -20,7 +20,8 @@ namespace models {
  *       SUPER: PacMan is capable of eating ghosts
  *
  */
-enum PacmanState { NORMAL, SUPER };
+enum PacmanState { NORMAL,
+    SUPER };
 
 /**
  *   @brief Game representation of ghost
@@ -28,7 +29,7 @@ enum PacmanState { NORMAL, SUPER };
  */
 class PacMan : public Agent {
 public:
-  // Current state of pacman
-  PacmanState state;
+    // Current state of pacman
+    PacmanState state;
 };
 } // namespace models

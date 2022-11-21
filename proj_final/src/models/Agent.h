@@ -17,17 +17,17 @@ namespace models {
  *
  */
 class Agent {
-  // Current position
-  misc::Vector<float> pos;
-  // Current velocity
-  float vel;
-  // Current direction
-  misc::Vector<float> direction;
+    // Current position
+    misc::Vector<float> pos;
+    // Current velocity
+    float vel;
+    // Current direction
+    misc::Vector<float> direction;
 
-  /**
-   *   @brief Update position of agent
-   *
-   */
-  void update_position();
+    /**
+     *   @brief Update position of agent
+     *
+     */
+    void update_position();
 };
 } // namespace models

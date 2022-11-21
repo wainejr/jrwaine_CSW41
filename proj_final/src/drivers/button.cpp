@@ -10,4 +10,5 @@
  *
  */
 
-namespace drivers {}
+namespace drivers {
+}

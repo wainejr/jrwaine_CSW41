@@ -17,7 +17,10 @@ namespace models {
 /**
  *   @brief Colors of ghosts
  */
-enum GhostColors { RED, YELLOW, PINK, BLUE };
+enum GhostColors { RED,
+    YELLOW,
+    PINK,
+    BLUE };
 
 /**
  *   @brief State of ghosts
@@ -26,7 +29,9 @@ enum GhostColors { RED, YELLOW, PINK, BLUE };
  *       AFRAID: ghost was eaten by PacMan and is going back to cave
  *
  */
-enum GhostState { OUT_CAVE, WALKING, AFRAID };
+enum GhostState { OUT_CAVE,
+    WALKING,
+    AFRAID };
 
 /**
  *   @brief Game representation of ghost
@@ -34,9 +39,9 @@ enum GhostState { OUT_CAVE, WALKING, AFRAID };
  */
 class Ghost : public Agent {
 public:
-  // Color of ghost
-  GhostColors color;
-  // Current state of ghost
-  GhostState state;
+    // Color of ghost
+    GhostColors color;
+    // Current state of ghost
+    GhostState state;
 };
 } // namespace models

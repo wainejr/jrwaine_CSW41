@@ -10,12 +10,16 @@
  */
 
 namespace models {
-enum TilesTypes { WALL, TUNNEL, PATH, SMALL_BALL, SUPER_BALL };
+enum TilesTypes { WALL,
+    TUNNEL,
+    PATH,
+    SMALL_BALL,
+    SUPER_BALL };
 
 class Labyrinth {
 
 public:
-  TilesTypes lab[31][28];
-  Labyrinth();
+    TilesTypes lab[31][28];
+    Labyrinth();
 };
 } // namespace models

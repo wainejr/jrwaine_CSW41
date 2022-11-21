@@ -18,11 +18,11 @@ using namespace models;
 namespace models {
 class GamePlay {
 
-  PacMan pac;
-  Ghost ghosts[4];
-  Labyrinth lab;
+    PacMan pac;
+    Ghost ghosts[4];
+    Labyrinth lab;
 
 public:
-  GamePlay();
+    GamePlay();
 };
 } // namespace models
