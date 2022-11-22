@@ -34,3 +34,13 @@ Contains all resources for displaying views in the interface.
 Most instances are related to the ones in "Models". 
 
 Each view description can be found in files.
+
+## Format files
+
+Install `clang-format` and run 
+
+```bash
+find proj_final/src/ -iname '*.h' -o -iname '*.cpp' | xargs clang-format -i
+```
+
+make sure you use a terminal that supports the Linux commands above
