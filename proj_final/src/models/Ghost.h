@@ -43,5 +43,6 @@ public:
     GhostColors color;
     // Current state of ghost
     GhostState state;
+    Ghost(GhostColors color);
 };
 } // namespace models

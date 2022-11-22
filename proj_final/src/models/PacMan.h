@@ -31,5 +31,6 @@ class PacMan : public Agent {
 public:
     // Current state of pacman
     PacmanState state;
+    PacMan();
 };
 } // namespace models
