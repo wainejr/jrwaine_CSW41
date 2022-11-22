@@ -9,14 +9,20 @@
  *
  */
 
-#include "src/misc/Vector.h"
+#include "../misc/Vector.h"
+#include "consts.h"
 
+#ifndef _MODELS_AGENT_H_
+#define _MODELS_AGENT_H_
 namespace models {
 /**
  *   @brief Agent base class
  *
  */
 class Agent {
+public:
+    Agent();
+
     // Current position
     misc::Vector<float> pos;
     // Current velocity
@@ -31,3 +37,4 @@ class Agent {
     void update_position();
 };
 } // namespace models
+#endif

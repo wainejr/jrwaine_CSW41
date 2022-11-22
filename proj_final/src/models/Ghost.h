@@ -9,29 +9,34 @@
  *
  */
 
-#include "src/models/Agent.h"
+#include "Agent.h"
 
-using namespace models;
-
+#ifndef _MODELS_GHOSTS_H_
+#define _MODELS_GHOSTS_H_
 namespace models {
-/**
- *   @brief Colors of ghosts
- */
-enum GhostColors { RED,
-    YELLOW,
-    PINK,
-    BLUE };
 
-/**
- *   @brief State of ghosts
- *       OUT_CAVE: ghost is coming out of cave
- *       WALKING: ghost currently walking through labyrinth
- *       AFRAID: ghost was eaten by PacMan and is going back to cave
- *
- */
-enum GhostState { OUT_CAVE,
-    WALKING,
-    AFRAID };
+namespace GhostColors {
+    /**
+     *   @brief Colors of ghosts
+     */
+    enum myEnum { RED,
+        YELLOW,
+        PINK,
+        BLUE };
+}
+
+namespace GhostState {
+    /**
+     *   @brief State of ghosts
+     *       OUT_CAVE: ghost is coming out of cave
+     *       WALKING: ghost currently walking through labyrinth
+     *       AFRAID: ghost was eaten by PacMan and is going back to cave
+     *
+     */
+    enum myEnum { OUT_CAVE,
+        WALKING,
+        AFRAID };
+}
 
 /**
  *   @brief Game representation of ghost
@@ -40,9 +45,12 @@ enum GhostState { OUT_CAVE,
 class Ghost : public Agent {
 public:
     // Color of ghost
-    GhostColors color;
+    GhostColors::myEnum color;
     // Current state of ghost
-    GhostState state;
-    Ghost(GhostColors color);
+    GhostState::myEnum state;
+
+    Ghost();
+    Ghost(GhostColors::myEnum color);
 };
 } // namespace models
+#endif

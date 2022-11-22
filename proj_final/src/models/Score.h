@@ -8,3 +8,16 @@
  *   @copyright Copyright (c) 2022
  *
  */
+
+#ifndef _MODELS_SCORE_H_
+#define _MODELS_SCORE_H_
+namespace models {
+class Score {
+public:
+    float curr_score;
+    float multiplier;
+
+    Score();
+};
+}
+#endif

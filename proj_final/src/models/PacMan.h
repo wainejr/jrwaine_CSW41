@@ -9,19 +9,22 @@
  *
  */
 
-#include "src/models/Agent.h"
+#include "Agent.h"
 
-using namespace models;
-
+#ifndef _MODELS_PACMAN_H_
+#define _MODELS_PACMAN_H_
 namespace models {
-/**
- *   @brief State of PacMan
- *       NORMAL: Normal state of pacman
- *       SUPER: PacMan is capable of eating ghosts
- *
- */
-enum PacmanState { NORMAL,
-    SUPER };
+
+namespace PacmanState {
+    /**
+     *   @brief State of PacMan
+     *       NORMAL: Normal state of pacman
+     *       SUPER: PacMan is capable of eating ghosts
+     *
+     */
+    enum myEnum { NORMAL,
+        SUPER };
+}
 
 /**
  *   @brief Game representation of ghost
@@ -30,7 +33,8 @@ enum PacmanState { NORMAL,
 class PacMan : public Agent {
 public:
     // Current state of pacman
-    PacmanState state;
+    PacmanState::myEnum state;
     PacMan();
 };
 } // namespace models
+#endif

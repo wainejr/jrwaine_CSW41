@@ -8,21 +8,24 @@
  *   @copyright Copyright (c) 2022
  *
  */
+#pragma once
 
-#include "src/models/Ghost.h"
-#include "src/models/Labyrinth.h"
-#include "src/models/PacMan.h"
+#include "Ghost.h"
+#include "Labyrinth.h"
+#include "PacMan.h"
+#include "Score.h"
 
-using namespace models;
-
+#ifndef _MODELS_GAMEPLAY_H_
+#define _MODELS_GAMEPLAY_H_
 namespace models {
 class GamePlay {
-
     PacMan pac;
     Ghost ghosts[4];
     Labyrinth lab;
+    Score score;
 
 public:
     GamePlay();
 };
 } // namespace models
+#endif
