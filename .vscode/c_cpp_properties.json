@@ -7,7 +7,8 @@
                 "${workspaceFolder}/proj_final",
                 "${workspaceFolder}/../threadx/common/inc",
                 "${workspaceFolder}/../threadx/ports/cortex_m4/iar/inc",
-                "${workspaceFolder}/../TivaWare_C_Series-2.2.0.295"
+                "${workspaceFolder}/../TivaWare_C_Series-2.2.0.295",
+                "${workspaceFolder}/../../SFML-2.5.1-gcc/include"
             ],
             "defines": [
                 "_DEBUG",

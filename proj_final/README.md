@@ -40,7 +40,7 @@ Each view description can be found in files.
 Install `clang-format` and run 
 
 ```bash
-find proj_final/src/ -iname '*.h' -o -iname '*.cpp' | xargs clang-format -i
+find src/ -iname '*.h' -o -iname '*.cpp' | xargs clang-format -i
 ```
 
 make sure you use a terminal that supports the Linux commands above

@@ -14,10 +14,18 @@
                 "${workspaceFolder}\\proj_final\\src\\threads\\*.cpp",
                 "${workspaceFolder}\\proj_final\\src\\view\\*.cpp",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                // Link to SFML
+                // "-LD:\\Codigos\\SFML-2.5.1\\lib",
+                "-I${workspaceFolder}\\..\\..\\SFML-2.5.1\\include",
+                "-L${workspaceFolder}\\..\\..\\SFML-2.5.1\\lib",
+                "-lsfml-graphics",
+                "-lsfml-window", 
+                "-lsfml-system"
             ],
             "options": {
-                "cwd": "${workspaceFolder}\\proj_final"
+                "cwd": "${workspaceFolder}\\proj_final",
+                "LD_LIBRARY_PATH": "D:\\Codigos\\SFML-2.5.1\\bin",
             },
             "problemMatcher": [
                 "$gcc"
