@@ -1,5 +1,4 @@
 #include "./Labyrinth.h"
-#include "./consts.h"
 
 models::Labyrinth::Labyrinth()
 {

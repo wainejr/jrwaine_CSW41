@@ -9,6 +9,8 @@
  *
  */
 
+#include "Ghost.h"
+#include "PacMan.h"
 #include "consts.h"
 
 #ifndef _MODELS_LABYRINTH_H_

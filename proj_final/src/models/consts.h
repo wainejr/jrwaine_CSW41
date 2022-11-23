@@ -3,6 +3,7 @@
 #ifndef _MODELS_CONSTS_H_
 #define _MODELS_CONSTS_H_
 namespace models {
+
 enum TilesTypes { WALL,
     TUNNEL,
     PATH,
@@ -51,14 +52,19 @@ namespace consts {
         { W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W },
     };
 
-    const float INITIAL_PACMAN_POSITION[2] = { 10, 10 };
-    const float INITIAL_GHOST_RED_POSITION[2] = { 10, 10 };
-    const float INITIAL_GHOST_YELLOW_POSITION[2] = { 10, 10 };
-    const float INITIAL_GHOST_PINK_POSITION[2] = { 10, 10 };
-    const float INITIAL_GHOST_BLUE_POSITION[2] = { 10, 10 };
+    // 0 is top and 31 is down
+    // 0 is left and 27 is right
+    const float INITIAL_PACMAN_POSITION[2] = { 14, 23.5 };
+    const float INITIAL_GHOST_RED_POSITION[2] = { 14, 11.5 };
+    const float INITIAL_GHOST_YELLOW_POSITION[2] = { 16, 14.5 };
+    const float INITIAL_GHOST_PINK_POSITION[2] = { 12, 14.5 };
+    const float INITIAL_GHOST_BLUE_POSITION[2] = { 14, 14.5 };
 
-    const float PACMAN_VELOCITY = 0.2;
-    const float GHOSTS_VELOCITY = 0.2;
+    const float DESIRED_FPS = 30;
+
+    // 0.6 seconds to pass a tile for each
+    const float PACMAN_VELOCITY = 0.6 / DESIRED_FPS;
+    const float GHOSTS_VELOCITY = 0.6 / DESIRED_FPS;
 
     const float RIGHT[2] = { 1, 0 };
     const float LEFT[2] = { -1, 0 };

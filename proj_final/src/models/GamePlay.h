@@ -18,14 +18,32 @@
 #ifndef _MODELS_GAMEPLAY_H_
 #define _MODELS_GAMEPLAY_H_
 namespace models {
+
+namespace UpdateStatus {
+    enum myEnum {
+        PACMAN_DIED,
+        GAME_CONTINUE,
+    };
+} // namespace UpdateStatus
+
 class GamePlay {
+
+    bool check_collision(PacMan* pac, Ghost* ghost);
+    void update_positions();
+    void update_pacman_state();
+    void update_ghosts_states();
+
+public:
     PacMan pac;
     Ghost ghosts[4];
     Labyrinth lab;
     Score score;
 
-public:
     GamePlay();
+
+    UpdateStatus::myEnum update();
+
+    void update_pacman_direction(misc::Vector<float> new_direction);
 };
 } // namespace models
 #endif

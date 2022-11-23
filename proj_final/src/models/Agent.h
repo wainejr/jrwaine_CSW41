@@ -35,6 +35,12 @@ public:
      *
      */
     void update_position();
+
+    /**
+     *   @brief Update agent in time step
+     *
+     */
+    void update();
 };
 } // namespace models
 #endif
