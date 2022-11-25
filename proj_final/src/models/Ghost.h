@@ -37,6 +37,7 @@ namespace GhostState {
         WALKING,
         AFRAID,
         IN_CAVE,
+        LOCKED_CAVE,
     };
 }
 
@@ -62,6 +63,7 @@ public:
     void into_walking();
     void into_incave();
     void into_outcave();
+    bool is_free_from_cave_lock();
 };
 } // namespace models
 #endif

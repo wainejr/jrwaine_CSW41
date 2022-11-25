@@ -37,6 +37,9 @@ void display_loop(models::GamePlay* gameplay)
                 window.close();
             }
         }
+        if (gameplay->gamestate == models::GAME_STATE_ENDED) {
+            break;
+        }
         view_gameplay.draw(&window);
 
         std::this_thread::sleep_for(std::chrono::milliseconds((int)(1000 / models::consts::DESIRED_FPS)));

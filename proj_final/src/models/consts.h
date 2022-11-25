@@ -79,6 +79,14 @@ namespace consts {
 
     const int GHOST_RESET_INCAVE_POSITION[2] = {13, 14};
 
+    const float GHOST_YELLOW_FREE_CAVE_SEC = 1.0f;
+    const float GHOST_BLUE_FREE_CAVE_SEC = 2.0f;
+    const float GHOST_PINK_FREE_CAVE_SEC = 3.0f;
+   
+    const int GHOST_YELLOW_FREE_CAVE_N_UPDATES = GHOST_YELLOW_FREE_CAVE_SEC / STATE_UPDATE_SEC_INTERVAL;
+    const int GHOST_BLUE_FREE_CAVE_N_UPDATES = GHOST_BLUE_FREE_CAVE_SEC / STATE_UPDATE_SEC_INTERVAL;
+    const int GHOST_PINK_FREE_CAVE_N_UPDATES = GHOST_PINK_FREE_CAVE_SEC / STATE_UPDATE_SEC_INTERVAL;
+
     const float DESIRED_FPS = 30;
 
     // 0.6 seconds to pass a tile for each second

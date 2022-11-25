@@ -149,6 +149,7 @@ void GamePlay::update_pacman_state()
 void GamePlay::update_ghost_state(Ghost* ghost)
 {
     misc::Vector<int> ghost_tile = ghost->get_agent_tile();
+    ghost->tick_update();
 
     switch (ghost->state)
     {
@@ -174,6 +175,11 @@ void GamePlay::update_ghost_state(Ghost* ghost)
     case GhostState::OUT_CAVE:
         if(!this->lab.is_incave(ghost_tile.x, ghost_tile.y)){
             ghost->into_walking();
+        }
+        break;
+    case GhostState::LOCKED_CAVE:
+        if (ghost->is_free_from_cave_lock()) {
+            ghost->into_outcave();
         }
         break;
     default:

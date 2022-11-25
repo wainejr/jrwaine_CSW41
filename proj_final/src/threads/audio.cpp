@@ -20,7 +20,7 @@ void audio_loop(models::GamePlay* gameplay)
 
     sound.setBuffer(buffer_normal);
 
-    while (true) {
+    while (gameplay->gamestate != models::GAME_STATE_ENDED) {
         sound.play();
         if (gameplay->pac.state == models::PacmanState::NORMAL) {
             sound.setBuffer(buffer_normal);
