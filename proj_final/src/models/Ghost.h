@@ -57,6 +57,11 @@ public:
 
     int n_updates_state;
     void tick_update();
+
+    void into_afraid();
+    void into_walking();
+    void into_incave();
+    void into_outcave();
 };
 } // namespace models
 #endif

@@ -26,6 +26,7 @@ public:
 
     TilesTypes get_tile(int x, int y);
     void consume_tile(int x, int y);
+    bool is_incave(int x, int y);
 };
 } // namespace models
 #endif

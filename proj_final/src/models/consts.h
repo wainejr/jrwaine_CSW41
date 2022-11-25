@@ -60,6 +60,7 @@ namespace consts {
 
     const int SMALL_BALL_SCORE = 10;
     const int SUPER_BALL_SCORE = 50;
+    const int GHOST_AFRAID_SCORE = 200;
     const float SCORE_MUL_DECREASE_PER_SEC = 0.05f;
     const float SCORE_MIN_MUL = 0.1f;
     const float SCORE_MUL_DECREASE_PER_UPDATE = SCORE_MUL_DECREASE_PER_SEC * STATE_UPDATE_SEC_INTERVAL;
@@ -75,6 +76,8 @@ namespace consts {
     const float INITIAL_GHOST_YELLOW_POSITION[2] = { 15.5f, 14.0f };
     const float INITIAL_GHOST_PINK_POSITION[2] = { 11.5f, 14.0f };
     const float INITIAL_GHOST_BLUE_POSITION[2] = { 13.5f, 14.0f };
+
+    const int GHOST_RESET_INCAVE_POSITION[2] = {13, 14};
 
     const float DESIRED_FPS = 30;
 

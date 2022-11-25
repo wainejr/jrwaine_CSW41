@@ -48,3 +48,21 @@ void Ghost::tick_update()
 {
     this->n_updates_state += 1;
 }
+
+void Ghost::into_afraid(){
+    this->state = GhostState::AFRAID;
+}
+
+void Ghost::into_walking(){
+    this->state = GhostState::WALKING;
+}
+
+void Ghost::into_incave(){
+    this->state = GhostState::IN_CAVE;
+    this->vel = consts::GHOSTS_VELOCITY_PER_SEC * 2;
+}
+
+void Ghost::into_outcave(){
+    this->state = GhostState::OUT_CAVE;
+    this->vel = consts::GHOSTS_VELOCITY_PER_SEC;
+}

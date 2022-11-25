@@ -25,6 +25,7 @@ GamePlay::GamePlay()
     Ghost* ghosts_ref[4] = { &this->ghosts[0], &this->ghosts[1], &this->ghosts[2], &this->ghosts[3] };
 
     this->lab = Labyrinth();
+    this->gamestate = GAME_STATE_RUNNING;
 
     this->score = Score();
     this->is_init = false;
@@ -126,6 +127,10 @@ void GamePlay::update_labyrinth_score()
         this->score.curr_score += this->score.multiplier * consts::SUPER_BALL_SCORE;
         this->lab.consume_tile(tile_pac.x, tile_pac.y);
         this->pac.into_super();
+        this->ghosts[0].into_afraid();
+        this->ghosts[1].into_afraid();
+        this->ghosts[2].into_afraid();
+        this->ghosts[3].into_afraid();
     }
 
     // Update score multiplier
@@ -143,7 +148,39 @@ void GamePlay::update_pacman_state()
 
 void GamePlay::update_ghost_state(Ghost* ghost)
 {
+    misc::Vector<int> ghost_tile = ghost->get_agent_tile();
+
+    switch (ghost->state)
+    {
+    case GhostState::AFRAID:
+        if(pac.state != PacmanState::SUPER){
+            ghost->into_walking();
+        }
+        break;
+    case GhostState::IN_CAVE:
+        if(pac.state == PacmanState::NORMAL){
+            if(this->lab.is_incave(ghost_tile.x, ghost_tile.y)){
+                ghost->into_outcave();
+            }else{
+                ghost->into_walking();
+            }
+        }else{
+            if(ghost_tile.x == consts::GHOST_RESET_INCAVE_POSITION[0] 
+            && ghost_tile.y == consts::GHOST_RESET_INCAVE_POSITION[1]){
+                ghost->into_outcave();
+            }
+        }
+        break;
+    case GhostState::OUT_CAVE:
+        if(!this->lab.is_incave(ghost_tile.x, ghost_tile.y)){
+            ghost->into_walking();
+        }
+        break;
+    default:
+        break;
+    }
 }
+
 
 void GamePlay::update_pacman_direction(misc::Vector<float> new_direction)
 {
@@ -157,17 +194,39 @@ void GamePlay::update_pacman_direction(misc::Vector<float> new_direction)
         }
     }
 }
+
+
+
 UpdateStatus::myEnum GamePlay::update_gameplay_status()
 {
-    // Check collisions if pacman is normal
-    if (this->pac.state == PacmanState::NORMAL) {
-        for (int i = 0; i < 4; i++) {
-            if (has_collision(&this->pac, &this->ghosts[i])) {
-                return UpdateStatus::PACMAN_DIED;
-            }
+    // Check collisions
+    for (int i = 0; i < 4; i++) {
+        bool has_coll = has_collision(&this->pac, &this->ghosts[i]);
+        if(!has_coll)
+            continue;
+        // In case of collision, check ghost state
+        switch (this->ghosts[i].state)
+        {
+        case GhostState::AFRAID:
+            this->ghosts[i].into_incave();
+            this->score.curr_score += consts::GHOST_AFRAID_SCORE * this->score.multiplier;
+            break;
+        case GhostState::IN_CAVE:
+            // Nothing happens, pacman is super and ghost is back to cave
+            break;
+        case GhostState::WALKING:
+            this->gamestate = GameState::GAME_STATE_ENDED;
+            return UpdateStatus::PACMAN_DIED;
+        case GhostState::OUT_CAVE:
+            this->gamestate = GameState::GAME_STATE_ENDED;
+            return UpdateStatus::PACMAN_DIED;
+        default:
+            break;
         }
     }
+
     if (this->lab.n_balls == 0) {
+        this->gamestate = GameState::GAME_STATE_ENDED;
         return UpdateStatus::GAME_FINISHED;
     }
     return UpdateStatus::GAME_CONTINUE;

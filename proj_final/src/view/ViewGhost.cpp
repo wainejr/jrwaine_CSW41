@@ -19,22 +19,31 @@ void ViewGhost::draw(sf::RenderWindow* window)
 
 #if USE_SFML
     sf::CircleShape ghost(globals::GHOST_RADIUS);
-    switch (this->ghost->color) {
-    case models::GhostColors::BLUE:
+    if (this->ghost->state == models::GhostState::AFRAID){
         ghost.setFillColor(sf::Color(0, 0, 255));
-        break;
-    case models::GhostColors::RED:
-        ghost.setFillColor(sf::Color(255, 0, 0));
-        break;
-    case models::GhostColors::PINK:
-        ghost.setFillColor(sf::Color(255, 105, 180));
-        break;
-    case models::GhostColors::YELLOW:
-        ghost.setFillColor(sf::Color(150, 150, 0));
-        break;
-    default:
-        break;
     }
+    else if(this->ghost->state == models::GhostState::IN_CAVE){
+        ghost.setFillColor(sf::Color(255, 255, 255));
+    }
+    else{
+        switch (this->ghost->color) {
+        case models::GhostColors::BLUE:
+            ghost.setFillColor(sf::Color(0, 255, 255));
+            break;
+        case models::GhostColors::RED:
+            ghost.setFillColor(sf::Color(255, 0, 0));
+            break;
+        case models::GhostColors::PINK:
+            ghost.setFillColor(sf::Color(255, 105, 180));
+            break;
+        case models::GhostColors::YELLOW:
+            ghost.setFillColor(sf::Color(150, 150, 0));
+            break;
+        default:
+            break;
+        }
+    }
+
     ghost.setPosition(sf::Vector2f(abs_pos_x, abs_pos_y));
     window->draw(ghost);
 #endif

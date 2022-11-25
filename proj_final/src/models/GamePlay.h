@@ -27,6 +27,11 @@ namespace UpdateStatus {
     };
 } // namespace UpdateStatus
 
+enum GameState {
+    GAME_STATE_RUNNING,
+    GAME_STATE_ENDED,
+};
+
 class GamePlay {
     misc::t_time last_update_sec;
     misc::t_time start_time;
@@ -47,6 +52,7 @@ public:
     Ghost ghosts[4];
     Labyrinth lab;
     Score score;
+    GameState gamestate;
 
     GamePlay();
 
