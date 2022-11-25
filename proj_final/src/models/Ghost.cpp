@@ -1,6 +1,8 @@
 #include "./Ghost.h"
 
-models::Ghost::Ghost(GhostColors::myEnum color)
+using namespace models;
+
+Ghost::Ghost(GhostColors::myEnum color)
     : Agent()
 {
     this->color = color;
@@ -25,12 +27,12 @@ models::Ghost::Ghost(GhostColors::myEnum color)
     default:
         break;
     }
-    this->vel = consts::GHOSTS_VELOCITY;
+    this->vel = consts::GHOSTS_VELOCITY_PER_SEC;
     // Ghosts initializes in cave
     this->state = GhostState::OUT_CAVE;
 }
 
-models::Ghost::Ghost()
+Ghost::Ghost()
     : Agent()
 {
 
@@ -40,4 +42,9 @@ models::Ghost::Ghost()
     this->vel = 0;
     // Ghosts initializes in cave
     this->state = GhostState::OUT_CAVE;
+}
+
+void Ghost::tick_update()
+{
+    this->n_updates_state += 1;
 }

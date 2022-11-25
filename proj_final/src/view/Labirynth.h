@@ -1,6 +1,9 @@
 #include "../models/Labyrinth.h"
 #include "Base.h"
 
+#ifndef _VIEW_LABYRINTH_H_
+#define _VIEW_LABYRINTH_H_
+
 namespace view {
 class ViewLabyrinth : public Base {
     void draw_labyrinth_maze(sf::RenderWindow* window);
@@ -15,3 +18,4 @@ public:
     void draw(sf::RenderWindow* window);
 };
 }
+#endif // !_VIEW_LABYRINTH_H_

@@ -3,5 +3,5 @@
 models::Score::Score()
 {
     this->curr_score = 0;
-    this->multiplier = 0;
+    this->multiplier = 1.0f;
 }

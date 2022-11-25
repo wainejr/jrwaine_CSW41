@@ -23,15 +23,24 @@ namespace UpdateStatus {
     enum myEnum {
         PACMAN_DIED,
         GAME_CONTINUE,
+        GAME_FINISHED,
     };
 } // namespace UpdateStatus
 
 class GamePlay {
+    misc::t_time last_update_sec;
+    misc::t_time start_time;
+    bool is_init;
 
-    bool check_collision(PacMan* pac, Ghost* ghost);
-    void update_positions();
+    bool has_collision(PacMan* pac, Ghost* ghost);
+    void update_positions(float vel_factor);
     void update_pacman_state();
-    void update_ghosts_states();
+    void update_ghost_state(Ghost* ghost);
+    bool validate_direction_change(Agent* a, misc::Vector<float> direction, bool is_ghost);
+    void correct_agent_position(Agent* a, bool is_ghost);
+    void update_labyrinth_score();
+
+    UpdateStatus::myEnum update_gameplay_status();
 
 public:
     PacMan pac;

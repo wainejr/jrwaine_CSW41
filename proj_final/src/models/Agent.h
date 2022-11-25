@@ -10,6 +10,7 @@
  */
 
 #include "../misc/Vector.h"
+#include "../misc/utils.h"
 #include "consts.h"
 
 #ifndef _MODELS_AGENT_H_
@@ -23,7 +24,7 @@ class Agent {
 public:
     Agent();
 
-    // Current position
+    // Current position, top-left of current tile
     misc::Vector<float> pos;
     // Current velocity
     float vel;
@@ -34,13 +35,9 @@ public:
      *   @brief Update position of agent
      *
      */
-    void update_position();
+    void update_position(float vel_factor);
 
-    /**
-     *   @brief Update agent in time step
-     *
-     */
-    void update();
+    misc::Vector<int> get_agent_tile();
 };
 } // namespace models
 #endif

@@ -1,25 +1,28 @@
 // #include "models/GamePlay.h"
 // #include "models/GameState.h"
 
+#include <SFML/Graphics.hpp>
 #include <chrono>
+#include <mutex>
 #include <thread>
 
 #include "models/GamePlay.h"
+#include "threads/audio.h"
+#include "threads/display.h"
+#include "threads/update_state.h"
 #include "view/GamePlay.h"
-#include <SFML/Graphics.hpp>
 
 int main()
 {
     models::GamePlay gameplay;
-    view::ViewGamePlay view_gamplay(&gameplay);
-    sf::RenderWindow window(sf::VideoMode(view::globals::RESOLUTION_X, view::globals::RESOLUTION_Y), "My window");
 
-    while (window.isOpen()) {
-        gameplay.update();
-        view_gamplay.draw(&window);
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 10));
+    std::thread t_display(display_loop, &gameplay);
+    std::thread t_update_state(update_state_loop, &gameplay);
+    std::thread t_audio(audio_loop, &gameplay);
+
+    while (true) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(150));
     }
-
     // create the window
 
     // // run the program as long as the window is open

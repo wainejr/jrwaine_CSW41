@@ -35,7 +35,9 @@ namespace GhostState {
      */
     enum myEnum { OUT_CAVE,
         WALKING,
-        AFRAID };
+        AFRAID,
+        IN_CAVE,
+    };
 }
 
 /**
@@ -43,6 +45,7 @@ namespace GhostState {
  *
  */
 class Ghost : public Agent {
+
 public:
     // Color of ghost
     GhostColors::myEnum color;
@@ -51,6 +54,9 @@ public:
 
     Ghost();
     Ghost(GhostColors::myEnum color);
+
+    int n_updates_state;
+    void tick_update();
 };
 } // namespace models
 #endif

@@ -10,8 +10,10 @@ ViewGhost::ViewGhost(models::Ghost* ghost)
 void ViewGhost::draw(sf::RenderWindow* window)
 {
     float abs_pos_x, abs_pos_y;
-    const float factor = 0.8;
-    globals::get_normalized_pos(this->ghost->pos.x, this->ghost->pos.y, &abs_pos_x, &abs_pos_y);
+    const float factor = 0.8f;
+    float center_pos_x = this->ghost->pos.x + 0.5;
+    float center_pos_y = this->ghost->pos.y + 0.5;
+    globals::get_normalized_pos(center_pos_x, center_pos_y, &abs_pos_x, &abs_pos_y);
     abs_pos_x = abs_pos_x - globals::GHOST_RADIUS;
     abs_pos_y = abs_pos_y - globals::GHOST_RADIUS;
 

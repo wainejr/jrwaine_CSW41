@@ -23,7 +23,9 @@ namespace PacmanState {
      *
      */
     enum myEnum { NORMAL,
-        SUPER };
+        SUPER,
+        DEAD,
+    };
 }
 
 /**
@@ -31,10 +33,15 @@ namespace PacmanState {
  *
  */
 class PacMan : public Agent {
+    int n_updates_super;
+
 public:
     // Current state of pacman
     PacmanState::myEnum state;
     PacMan();
+
+    void tick_update();
+    void into_super();
 };
 } // namespace models
 #endif

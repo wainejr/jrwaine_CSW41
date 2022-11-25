@@ -20,8 +20,12 @@ namespace models {
 class Labyrinth {
 
 public:
-    TilesTypes lab[31][28];
+    TilesTypes lab[consts::MAZE_SIZE_Y][consts::MAZE_SIZE_X];
+    int n_balls;
     Labyrinth();
+
+    TilesTypes get_tile(int x, int y);
+    void consume_tile(int x, int y);
 };
 } // namespace models
 #endif
