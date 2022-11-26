@@ -32,7 +32,7 @@ void ViewLabyrinth::draw_maze_square(sf::RenderWindow* window, misc::Vector<int>
     if (tl == models::TilesTypes::WALL) {
         square.setFillColor(sf::Color(50, 50, 200));
     } else if (tl == models::TilesTypes::TUNNEL) {
-        square.setFillColor(sf::Color(215, 161, 249));
+        square.setFillColor(sf::Color(200, 150, 220));
     }
     square.setPosition(sf::Vector2f(abs_pos_x, abs_pos_y));
     window->draw(square);

@@ -20,7 +20,7 @@ void ViewGhost::draw(sf::RenderWindow* window)
 #if USE_SFML
     sf::CircleShape ghost(globals::GHOST_RADIUS);
     if (this->ghost->state == models::GhostState::AFRAID) {
-        ghost.setFillColor(sf::Color(0, 0, 255));
+        ghost.setFillColor(sf::Color(20, 20, 255));
     } else if (this->ghost->state == models::GhostState::IN_CAVE) {
         ghost.setFillColor(sf::Color(255, 255, 255));
     } else {

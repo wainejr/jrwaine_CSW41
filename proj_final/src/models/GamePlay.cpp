@@ -34,7 +34,7 @@ GamePlay::GamePlay()
     this->start_time = misc::get_current_time();
 }
 
-void GamePlay::correct_agent_position(Agent* a, bool tunnel_allowed)
+void GamePlay::correct_agent_position(Agent* a, bool tunnel_allowed, bool correct_perpendicular)
 {
     misc::Vector<int> tile_to_check = misc::Vector<int>(a->pos.x, a->pos.y);
     // Top-left corner is reference for negative velocities
@@ -55,7 +55,8 @@ void GamePlay::correct_agent_position(Agent* a, bool tunnel_allowed)
         }
         // Agent to x direction, round y always and x if tile is not valid
     } else if (a->direction.x != 0) {
-        a->pos.y = round(a->pos.y);
+        if (correct_perpendicular)
+            a->pos.y = round(a->pos.y);
         if (!is_valid) {
             // Passed to the right
             if (a->direction.x == 1)
@@ -66,7 +67,8 @@ void GamePlay::correct_agent_position(Agent* a, bool tunnel_allowed)
         }
         // Agent to y direction, round x always and y if tile is not valid
     } else if (a->direction.y != 0) {
-        a->pos.x = round(a->pos.x);
+        if (correct_perpendicular)
+            a->pos.x = round(a->pos.x);
         if (!is_valid) {
             // Passed to the bottom
             if (a->direction.y == 1)
@@ -86,11 +88,14 @@ void GamePlay::correct_agent_position(Agent* a, bool tunnel_allowed)
 void GamePlay::update_positions(float vel_factor)
 {
     this->pac.update_position(vel_factor);
-    this->correct_agent_position(&this->pac, false);
+    this->correct_agent_position(&this->pac, false, true);
     for (int i = 0; i < 4; i++) {
         this->ghosts[i].update_position(vel_factor);
+        // Ghosts locked in cave are not allowed to pass tunnel
         bool tunnel_allowed = this->ghosts[i].state != GhostState::LOCKED_CAVE;
-        this->correct_agent_position(&this->ghosts[i], tunnel_allowed);
+        // Don't correct perpendicular position for ghosts locked in cave or going out of it
+        bool correct_perpendicular = this->ghosts[i].state != GhostState::LOCKED_CAVE;
+        this->correct_agent_position(&this->ghosts[i], tunnel_allowed, correct_perpendicular);
     }
 }
 
@@ -189,6 +194,10 @@ void GamePlay::update_ghost_state(Ghost* ghost)
 
 void GamePlay::update_agent_direction(Agent* agent, misc::Vector<float> new_direction, bool tunnel_allowed)
 {
+    // No update needed
+    if (new_direction.x == agent->direction.x && new_direction.y == agent->direction.y) {
+        return;
+    }
     if (this->validate_direction_change(agent, new_direction, tunnel_allowed)) {
         agent->direction = new_direction;
         // Round values for direction

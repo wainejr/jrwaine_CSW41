@@ -78,10 +78,13 @@ namespace consts {
     const float INITIAL_GHOST_BLUE_POSITION[2] = { 11.5f, 14.0f };
 
     const int GHOST_RESET_INCAVE_POSITION[2] = { 13, 14 };
+    const int LAB_LEFT_TUNNEL[2] = { 13, 12 };
+    const int LAB_RIGHT_TUNNEL[2] = { 14, 12 };
 
-    const float GHOST_ORANGE_FREE_CAVE_SEC = 1.0f;
-    const float GHOST_BLUE_FREE_CAVE_SEC = 2.0f;
-    const float GHOST_PINK_FREE_CAVE_SEC = 3.0f;
+
+    const float GHOST_ORANGE_FREE_CAVE_SEC = 5.0f;
+    const float GHOST_BLUE_FREE_CAVE_SEC = 3.5f;
+    const float GHOST_PINK_FREE_CAVE_SEC = 2.0f;
 
     const int GHOST_ORANGE_FREE_CAVE_N_UPDATES = GHOST_ORANGE_FREE_CAVE_SEC / STATE_UPDATE_SEC_INTERVAL;
     const int GHOST_BLUE_FREE_CAVE_N_UPDATES = GHOST_BLUE_FREE_CAVE_SEC / STATE_UPDATE_SEC_INTERVAL;

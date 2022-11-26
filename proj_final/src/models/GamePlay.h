@@ -42,7 +42,7 @@ class GamePlay {
     void update_pacman_state();
     void update_ghost_state(Ghost* ghost);
     bool validate_direction_change(Agent* a, misc::Vector<float> direction, bool tunnel_allowed);
-    void correct_agent_position(Agent* a, bool tunnel_allowed);
+    void correct_agent_position(Agent* a, bool tunnel_allowed, bool correct_perpendicular);
     void update_labyrinth_score();
     void update_agent_direction(Agent* agent, misc::Vector<float> new_direction, bool tunnel_allowed);
 

@@ -44,6 +44,18 @@ void control_incave(models::GhostControl* ghost_control)
 
 void control_outcave(models::GhostControl* ghost_control)
 {
+    misc::Vector<int> direction(0, 0);
+    if (ghost_control->curr_tile.x < models::consts::LAB_LEFT_TUNNEL[0]) {
+        direction.x = 1;
+        direction.y = 0;
+    } else if (ghost_control->curr_tile.x > models::consts::LAB_RIGHT_TUNNEL[0]) {
+        direction.x = -1;
+        direction.y = 0;
+    } else {
+        direction.x = 0;
+        direction.y = -1;
+    }
+    ghost_control->update_direction(direction);
 }
 
 void set_random_direction(models::GhostControl* ghost_control, misc::Vector<int> dir_exclude)
@@ -127,10 +139,10 @@ void control_locked_cave(models::GhostControl* ghost_control)
     }
 }
 
-void control_ghost_loop(models::GamePlay* gameplay, models::Ghost* ghost)
+void control_ghost_loop(models::GamePlay* gameplay, models::Ghost* ghost, int random_seed)
 {
     // Initialize random seed
-    srand(time(NULL));
+    srand(random_seed);
     models::GhostControl ghost_control(models::CONTROL_RANDOM, gameplay, ghost);
 
     while (gameplay->gamestate == models::GAME_STATE_RUNNING) {
