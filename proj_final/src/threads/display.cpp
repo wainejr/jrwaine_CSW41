@@ -42,7 +42,7 @@ void display_loop(models::GamePlay* gameplay)
         }
         view_gameplay.draw(&window);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds((int)(1000 / models::consts::DESIRED_FPS)));
+        std::this_thread::sleep_for(std::chrono::milliseconds((int)(1000 / view::globals::DESIRED_FPS)));
     }
 }
 #else

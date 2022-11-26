@@ -19,10 +19,10 @@ Ghost::Ghost(GhostColors::myEnum color)
         this->pos = misc::Vector<float>(consts::INITIAL_GHOST_BLUE_POSITION);
         this->direction = misc::Vector<float>(consts::INITIAL_GHOST_BLUE_DIRECTION);
         break;
-    case GhostColors::YELLOW:
+    case GhostColors::ORANGE:
         this->state = GhostState::LOCKED_CAVE;
-        this->pos = misc::Vector<float>(consts::INITIAL_GHOST_YELLOW_POSITION);
-        this->direction = misc::Vector<float>(consts::INITIAL_GHOST_YELLOW_DIRECTION);
+        this->pos = misc::Vector<float>(consts::INITIAL_GHOST_ORANGE_POSITION);
+        this->direction = misc::Vector<float>(consts::INITIAL_GHOST_ORANGE_DIRECTION);
         break;
     case GhostColors::PINK:
         this->state = GhostState::LOCKED_CAVE;
@@ -55,12 +55,17 @@ void Ghost::tick_update()
     this->n_updates_state += 1;
 }
 
-void Ghost::into_afraid(){
-    this->n_updates_state = 0;
-    this->state = GhostState::AFRAID;
+void Ghost::into_afraid()
+{
+    // Only goes into afraid if it's walking or in cave
+    if (this->state == GhostState::WALKING || this->state == GhostState::IN_CAVE) {
+        this->n_updates_state = 0;
+        this->state = GhostState::AFRAID;
+    }
 }
 
-void Ghost::into_walking(){
+void Ghost::into_walking()
+{
     this->n_updates_state = 0;
     this->state = GhostState::WALKING;
 }
@@ -82,8 +87,8 @@ void Ghost::into_outcave()
 bool Ghost::is_free_from_cave_lock()
 {
     switch (this->color) {
-    case GhostColors::YELLOW:
-        return this->n_updates_state >= consts::GHOST_YELLOW_FREE_CAVE_N_UPDATES;
+    case GhostColors::ORANGE:
+        return this->n_updates_state >= consts::GHOST_ORANGE_FREE_CAVE_N_UPDATES;
     case GhostColors::PINK:
         return this->n_updates_state >= consts::GHOST_PINK_FREE_CAVE_N_UPDATES;
     case GhostColors::BLUE:

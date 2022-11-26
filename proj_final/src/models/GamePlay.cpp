@@ -2,12 +2,12 @@
 
 using namespace models;
 
-bool is_tile_valid_for_agent(TilesTypes tl, bool is_ghost)
+bool is_tile_valid_for_agent(TilesTypes tl, bool tunnel_allowed)
 {
     if (tl == TilesTypes::WALL) {
         return false;
     }
-    if (tl == TilesTypes::TUNNEL && !is_ghost) {
+    if (tl == TilesTypes::TUNNEL && !tunnel_allowed) {
         return false;
     }
     return true;
@@ -18,7 +18,7 @@ GamePlay::GamePlay()
     this->pac = PacMan();
 
     this->ghosts[0] = Ghost(GhostColors::RED);
-    this->ghosts[1] = Ghost(GhostColors::YELLOW);
+    this->ghosts[1] = Ghost(GhostColors::ORANGE);
     this->ghosts[2] = Ghost(GhostColors::BLUE);
     this->ghosts[3] = Ghost(GhostColors::PINK);
 
@@ -34,7 +34,7 @@ GamePlay::GamePlay()
     this->start_time = misc::get_current_time();
 }
 
-void GamePlay::correct_agent_position(Agent* a, bool is_ghost)
+void GamePlay::correct_agent_position(Agent* a, bool tunnel_allowed)
 {
     misc::Vector<int> tile_to_check = misc::Vector<int>(a->pos.x, a->pos.y);
     // Top-left corner is reference for negative velocities
@@ -45,7 +45,7 @@ void GamePlay::correct_agent_position(Agent* a, bool is_ghost)
         tile_to_check.x += 1;
     }
     TilesTypes tl = this->lab.get_tile(tile_to_check.x, tile_to_check.y);
-    bool is_valid = is_tile_valid_for_agent(tl, is_ghost);
+    bool is_valid = is_tile_valid_for_agent(tl, tunnel_allowed);
 
     // Agent stopped, only round values if tile is not valid
     if (a->direction.x == 0 && a->direction.y == 0) {
@@ -89,21 +89,22 @@ void GamePlay::update_positions(float vel_factor)
     this->correct_agent_position(&this->pac, false);
     for (int i = 0; i < 4; i++) {
         this->ghosts[i].update_position(vel_factor);
-        this->correct_agent_position(&this->ghosts[i], true);
+        bool tunnel_allowed = this->ghosts[i].state != GhostState::LOCKED_CAVE;
+        this->correct_agent_position(&this->ghosts[i], tunnel_allowed);
     }
 }
 
 bool GamePlay::validate_direction_change(
     Agent* a,
     misc::Vector<float> direction,
-    bool is_ghost)
+    bool tunnel_allowed)
 {
     misc::Vector<int> curr_tile = a->get_agent_tile();
     misc::Vector<int> change_dir = misc::Vector<int>(direction.x, direction.y);
     curr_tile.add(change_dir);
 
     TilesTypes tl = this->lab.get_tile(curr_tile.x, curr_tile.y);
-    return is_tile_valid_for_agent(tl, is_ghost);
+    return is_tile_valid_for_agent(tl, tunnel_allowed);
 }
 
 bool GamePlay::has_collision(PacMan* pac, Ghost* ghost)
@@ -151,29 +152,28 @@ void GamePlay::update_ghost_state(Ghost* ghost)
     misc::Vector<int> ghost_tile = ghost->get_agent_tile();
     ghost->tick_update();
 
-    switch (ghost->state)
-    {
+    switch (ghost->state) {
     case GhostState::AFRAID:
-        if(pac.state != PacmanState::SUPER){
+        if (pac.state != PacmanState::SUPER) {
             ghost->into_walking();
         }
         break;
     case GhostState::IN_CAVE:
-        if(pac.state == PacmanState::NORMAL){
-            if(this->lab.is_incave(ghost_tile.x, ghost_tile.y)){
+        if (pac.state == PacmanState::NORMAL) {
+            if (this->lab.is_incave(ghost_tile.x, ghost_tile.y)) {
                 ghost->into_outcave();
-            }else{
+            } else {
                 ghost->into_walking();
             }
-        }else{
-            if(ghost_tile.x == consts::GHOST_RESET_INCAVE_POSITION[0] 
-            && ghost_tile.y == consts::GHOST_RESET_INCAVE_POSITION[1]){
+        } else {
+            if (ghost_tile.x == consts::GHOST_RESET_INCAVE_POSITION[0]
+                && ghost_tile.y == consts::GHOST_RESET_INCAVE_POSITION[1]) {
                 ghost->into_outcave();
             }
         }
         break;
     case GhostState::OUT_CAVE:
-        if(!this->lab.is_incave(ghost_tile.x, ghost_tile.y)){
+        if (!this->lab.is_incave(ghost_tile.x, ghost_tile.y)) {
             ghost->into_walking();
         }
         break;
@@ -187,32 +187,38 @@ void GamePlay::update_ghost_state(Ghost* ghost)
     }
 }
 
-
-void GamePlay::update_pacman_direction(misc::Vector<float> new_direction)
+void GamePlay::update_agent_direction(Agent* agent, misc::Vector<float> new_direction, bool tunnel_allowed)
 {
-    if (this->validate_direction_change(&this->pac, new_direction, false)) {
-        this->pac.direction = new_direction;
+    if (this->validate_direction_change(agent, new_direction, tunnel_allowed)) {
+        agent->direction = new_direction;
         // Round values for direction
         if (new_direction.x != 0) {
-            this->pac.pos.y = round(this->pac.pos.y);
-        } else {
-            this->pac.pos.x = round(this->pac.pos.x);
+            agent->pos.y = round(agent->pos.y);
+        } else if (new_direction.y != 0) {
+            agent->pos.x = round(agent->pos.x);
         }
     }
 }
 
+void GamePlay::update_pacman_direction(misc::Vector<float> new_direction)
+{
+    this->update_agent_direction(&this->pac, new_direction, false);
+}
 
+void GamePlay::update_ghost_direction(Ghost* ghost, misc::Vector<float> new_direction)
+{
+    this->update_agent_direction(ghost, new_direction, true);
+}
 
 UpdateStatus::myEnum GamePlay::update_gameplay_status()
 {
     // Check collisions
     for (int i = 0; i < 4; i++) {
         bool has_coll = has_collision(&this->pac, &this->ghosts[i]);
-        if(!has_coll)
+        if (!has_coll)
             continue;
         // In case of collision, check ghost state
-        switch (this->ghosts[i].state)
-        {
+        switch (this->ghosts[i].state) {
         case GhostState::AFRAID:
             this->ghosts[i].into_incave();
             this->score.curr_score += consts::GHOST_AFRAID_SCORE * this->score.multiplier;

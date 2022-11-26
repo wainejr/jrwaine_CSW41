@@ -19,13 +19,11 @@ void ViewGhost::draw(sf::RenderWindow* window)
 
 #if USE_SFML
     sf::CircleShape ghost(globals::GHOST_RADIUS);
-    if (this->ghost->state == models::GhostState::AFRAID){
+    if (this->ghost->state == models::GhostState::AFRAID) {
         ghost.setFillColor(sf::Color(0, 0, 255));
-    }
-    else if(this->ghost->state == models::GhostState::IN_CAVE){
+    } else if (this->ghost->state == models::GhostState::IN_CAVE) {
         ghost.setFillColor(sf::Color(255, 255, 255));
-    }
-    else{
+    } else {
         switch (this->ghost->color) {
         case models::GhostColors::BLUE:
             ghost.setFillColor(sf::Color(0, 255, 255));
@@ -36,8 +34,8 @@ void ViewGhost::draw(sf::RenderWindow* window)
         case models::GhostColors::PINK:
             ghost.setFillColor(sf::Color(255, 105, 180));
             break;
-        case models::GhostColors::YELLOW:
-            ghost.setFillColor(sf::Color(150, 150, 0));
+        case models::GhostColors::ORANGE:
+            ghost.setFillColor(sf::Color(255, 109, 10));
             break;
         default:
             break;

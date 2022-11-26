@@ -1,7 +1,7 @@
 #include "update_state.h"
 
-#include "display.h"
 #include "control_ghost.h"
+#include "display.h"
 
 #if USE_SFML
 

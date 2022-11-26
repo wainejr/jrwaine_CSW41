@@ -34,12 +34,12 @@ void Labyrinth::consume_tile(int x, int y)
 
 bool Labyrinth::is_incave(int x, int y)
 {
-    if(x > 10 && x < 17){
-        if(y > 12 && y < 16){
+    if (x > 10 && x < 17) {
+        if (y > 12 && y < 16) {
             return true;
         }
     }
-    if(y == 12 && (x == 13 || x == 14)){
+    if (y == 12 && (x == 13 || x == 14)) {
         return true;
     }
     return false;

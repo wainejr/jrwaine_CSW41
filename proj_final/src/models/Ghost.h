@@ -20,7 +20,7 @@ namespace GhostColors {
      *   @brief Colors of ghosts
      */
     enum myEnum { RED,
-        YELLOW,
+        ORANGE,
         PINK,
         BLUE };
 }

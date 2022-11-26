@@ -55,8 +55,8 @@ namespace consts {
         { W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W },
     };
 
-    // Update state every 20 ms,
-    const float STATE_UPDATE_SEC_INTERVAL = 0.020f;
+    // Update state every 10 ms,
+    const float STATE_UPDATE_SEC_INTERVAL = 0.010f;
 
     const int SMALL_BALL_SCORE = 10;
     const int SUPER_BALL_SCORE = 50;
@@ -73,25 +73,23 @@ namespace consts {
     // Position is in top-left of tile
     const float INITIAL_PACMAN_POSITION[2] = { 13.5f, 23.0f };
     const float INITIAL_GHOST_RED_POSITION[2] = { 13.5f, 11.0f };
-    const float INITIAL_GHOST_YELLOW_POSITION[2] = { 15.5f, 14.0f };
-    const float INITIAL_GHOST_PINK_POSITION[2] = { 11.5f, 14.0f };
-    const float INITIAL_GHOST_BLUE_POSITION[2] = { 13.5f, 14.0f };
+    const float INITIAL_GHOST_ORANGE_POSITION[2] = { 15.5f, 14.0f };
+    const float INITIAL_GHOST_PINK_POSITION[2] = { 13.5f, 14.0f };
+    const float INITIAL_GHOST_BLUE_POSITION[2] = { 11.5f, 14.0f };
 
-    const int GHOST_RESET_INCAVE_POSITION[2] = {13, 14};
+    const int GHOST_RESET_INCAVE_POSITION[2] = { 13, 14 };
 
-    const float GHOST_YELLOW_FREE_CAVE_SEC = 1.0f;
+    const float GHOST_ORANGE_FREE_CAVE_SEC = 1.0f;
     const float GHOST_BLUE_FREE_CAVE_SEC = 2.0f;
     const float GHOST_PINK_FREE_CAVE_SEC = 3.0f;
-   
-    const int GHOST_YELLOW_FREE_CAVE_N_UPDATES = GHOST_YELLOW_FREE_CAVE_SEC / STATE_UPDATE_SEC_INTERVAL;
+
+    const int GHOST_ORANGE_FREE_CAVE_N_UPDATES = GHOST_ORANGE_FREE_CAVE_SEC / STATE_UPDATE_SEC_INTERVAL;
     const int GHOST_BLUE_FREE_CAVE_N_UPDATES = GHOST_BLUE_FREE_CAVE_SEC / STATE_UPDATE_SEC_INTERVAL;
     const int GHOST_PINK_FREE_CAVE_N_UPDATES = GHOST_PINK_FREE_CAVE_SEC / STATE_UPDATE_SEC_INTERVAL;
 
-    const float DESIRED_FPS = 30;
-
     // 0.6 seconds to pass a tile for each second
-    const float PACMAN_VELOCITY_PER_SEC = 6.0f;
-    const float GHOSTS_VELOCITY_PER_SEC = 1.2f;
+    const float PACMAN_VELOCITY_PER_SEC = 4.0f;
+    const float GHOSTS_VELOCITY_PER_SEC = 4.0f;
 
     const float RIGHT[2] = { 1.0f, 0.0f };
     const float LEFT[2] = { -1.0f, 0.0f };
@@ -102,9 +100,9 @@ namespace consts {
 
     const float INITIAL_PACMAN_DIRECTION[2] = { LEFT[0], LEFT[1] };
     const float INITIAL_GHOST_RED_DIRECTION[2] = { STOP[0], STOP[1] };
-    const float INITIAL_GHOST_YELLOW_DIRECTION[2] = { STOP[0], STOP[1] };
-    const float INITIAL_GHOST_PINK_DIRECTION[2] = { STOP[0], STOP[1] };
-    const float INITIAL_GHOST_BLUE_DIRECTION[2] = { STOP[0], STOP[1] };
+    const float INITIAL_GHOST_ORANGE_DIRECTION[2] = { DOWN[0], DOWN[1] };
+    const float INITIAL_GHOST_PINK_DIRECTION[2] = { UP[0], UP[1] };
+    const float INITIAL_GHOST_BLUE_DIRECTION[2] = { DOWN[0], DOWN[1] };
 
 } // namespace consts
 } // namespace models

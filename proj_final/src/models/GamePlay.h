@@ -41,9 +41,10 @@ class GamePlay {
     void update_positions(float vel_factor);
     void update_pacman_state();
     void update_ghost_state(Ghost* ghost);
-    bool validate_direction_change(Agent* a, misc::Vector<float> direction, bool is_ghost);
-    void correct_agent_position(Agent* a, bool is_ghost);
+    bool validate_direction_change(Agent* a, misc::Vector<float> direction, bool tunnel_allowed);
+    void correct_agent_position(Agent* a, bool tunnel_allowed);
     void update_labyrinth_score();
+    void update_agent_direction(Agent* agent, misc::Vector<float> new_direction, bool tunnel_allowed);
 
     UpdateStatus::myEnum update_gameplay_status();
 
@@ -57,7 +58,7 @@ public:
     GamePlay();
 
     UpdateStatus::myEnum update();
-
+    void update_ghost_direction(Ghost* ghost, misc::Vector<float> new_direction);
     void update_pacman_direction(misc::Vector<float> new_direction);
 };
 } // namespace models

@@ -12,8 +12,10 @@ public:
     int curr_path_pos;
     int path_size;
 
-    misc::Vector<float> last_dir;
+    misc::Vector<int> last_dir;
     misc::Vector<int> last_tile;
+    misc::Vector<int> last_tile_dir_updated;
+    misc::Vector<int> curr_tile;
 
     GhostControlType control_type;
 
@@ -24,5 +26,7 @@ public:
 
     void update();
     void update_path();
+
+    void update_direction(misc::Vector<int> new_direction);
 };
 }
