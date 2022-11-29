@@ -33,8 +33,6 @@ enum GameState {
 };
 
 class GamePlay {
-    misc::t_time last_update_sec;
-    misc::t_time start_time;
     bool is_init;
 
     bool has_collision(PacMan* pac, Ghost* ghost);

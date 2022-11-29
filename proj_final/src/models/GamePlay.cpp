@@ -22,21 +22,16 @@ GamePlay::GamePlay()
     this->ghosts[2] = Ghost(GhostColors::BLUE);
     this->ghosts[3] = Ghost(GhostColors::PINK);
 
-    Ghost* ghosts_ref[4] = { &this->ghosts[0], &this->ghosts[1], &this->ghosts[2], &this->ghosts[3] };
-
     this->lab = Labyrinth();
     this->gamestate = GAME_STATE_RUNNING;
 
     this->score = Score();
     this->is_init = false;
-
-    this->last_update_sec = misc::get_current_time();
-    this->start_time = misc::get_current_time();
 }
 
 void GamePlay::correct_agent_position(Agent* a, bool tunnel_allowed, bool correct_perpendicular)
 {
-    misc::Vector<int> tile_to_check = misc::Vector<int>(a->pos.x, a->pos.y);
+    misc::Vector<int> tile_to_check = misc::Vector<int>((int)a->pos.x, (int)a->pos.y);
     // Top-left corner is reference for negative velocities
     // Botom-right corner is reference for positive velocities
     if (a->direction.y == 1) {
@@ -105,7 +100,7 @@ bool GamePlay::validate_direction_change(
     bool tunnel_allowed)
 {
     misc::Vector<int> curr_tile = a->get_agent_tile();
-    misc::Vector<int> change_dir = misc::Vector<int>(direction.x, direction.y);
+    misc::Vector<int> change_dir = misc::Vector<int>((int)direction.x, (int)direction.y);
     curr_tile.add(change_dir);
 
     TilesTypes tl = this->lab.get_tile(curr_tile.x, curr_tile.y);
