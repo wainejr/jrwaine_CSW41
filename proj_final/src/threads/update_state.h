@@ -1,5 +1,5 @@
 #include "../defines.h"
-#include "../models/GamePlay.h"
+#include "../models/Game.h"
 
 #if USE_SFML
 #include <chrono>
@@ -10,7 +10,7 @@
 #define _THREADS_UPDATE_STATE_H_
 
 #if USE_SFML
-void update_state_loop(models::GamePlay* gameplay);
+void update_state_loop(models::Game* game);
 #else
 void update_state_loop(UINT id);
 #endif

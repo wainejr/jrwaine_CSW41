@@ -12,32 +12,26 @@
 
 #include "GamePlay.h"
 
-namespace models{
+#ifndef _MODELS_GAME_H_
+#define _MODELS_GAME_H_
+namespace models {
 
-    enum GlobalStates{
-        MENU,
-        PLAYING,
-        SHOWING_SCORE,
-    };
+enum GlobalStates {
+    MENU,
+    PLAYING,
+    SHOWING_SCORE,
+};
 
-    class Game
-    {
+class Game {
 
-    public:
-        GlobalStates curr_state;
-        GamePlay gameplay;
-        Game();
+public:
+    GlobalStates curr_state;
+    GamePlay gameplay;
+    Game();
 
-        GlobalStates state_machine();
-
-        void loop_playing();
-        void loop_menu();
-        void loop_showing_score();
-
-        void into_playing();
-        void into_showing_score();
-        void into_menu();
-    };
-    
-    
+    void into_playing();
+    void into_showing_score();
+    void into_menu();
+};
 }
+#endif

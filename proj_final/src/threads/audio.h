@@ -1,5 +1,5 @@
 #include "../defines.h"
-#include "../models/GamePlay.h"
+#include "../models/Game.h"
 
 #if USE_SFML
 #include "SFML/Audio.hpp"
@@ -8,4 +8,4 @@
 #include <thread>
 #endif
 
-void audio_loop(models::GamePlay* gameplay);
+void audio_loop(models::Game* game);

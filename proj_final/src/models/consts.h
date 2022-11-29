@@ -81,7 +81,6 @@ namespace consts {
     const int LAB_LEFT_TUNNEL[2] = { 13, 12 };
     const int LAB_RIGHT_TUNNEL[2] = { 14, 12 };
 
-
     const float GHOST_ORANGE_FREE_CAVE_SEC = 5.0f;
     const float GHOST_BLUE_FREE_CAVE_SEC = 3.5f;
     const float GHOST_PINK_FREE_CAVE_SEC = 2.0f;

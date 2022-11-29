@@ -3,7 +3,6 @@
 #include "Ghost.h"
 #include "Labirynth.h"
 #include "PacMan.h"
-#include "Score.h"
 
 #ifndef _VIEW_GAMEPLAY_H_
 #define _VIEW_GAMEPLAY_H_
@@ -19,7 +18,6 @@ public:
     ViewPacMan view_pac;
     ViewGhost view_ghosts[4];
     ViewLabyrinth view_labyrinth;
-    ViewScore view_score;
 };
 }
 #endif

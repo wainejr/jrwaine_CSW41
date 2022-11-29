@@ -6,7 +6,7 @@
 #include <mutex>
 #include <thread>
 
-#include "models/GamePlay.h"
+#include "models/Game.h"
 #include "threads/audio.h"
 #include "threads/display.h"
 #include "threads/update_state.h"
@@ -14,15 +14,16 @@
 
 int main()
 {
-    models::GamePlay gameplay;
+    models::Game game;
 
-    std::thread t_display(display_loop, &gameplay);
-    std::thread t_update_state(update_state_loop, &gameplay);
-    std::thread t_audio(audio_loop, &gameplay);
+    std::thread t_display(display_loop, &game);
+    std::thread t_update_state(update_state_loop, &game);
+    std::thread t_audio(audio_loop, &game);
 
     while (true) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(150));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
+
     // create the window
 
     // // run the program as long as the window is open

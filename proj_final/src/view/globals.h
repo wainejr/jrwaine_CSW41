@@ -1,6 +1,5 @@
 #include "../defines.h"
 #include "../models/consts.h"
-#include "SFML/Graphics.hpp"
 
 #ifndef _VIEW_GLOBALS_H_
 #define _VIEW_GLOBALS_H_

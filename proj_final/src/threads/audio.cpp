@@ -1,9 +1,7 @@
 #include "audio.h"
 
-void audio_loop(models::GamePlay* gameplay)
+void audio_loop(models::Game* game)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
     sf::Sound sound;
     sf::SoundBuffer buffer_normal;
     sf::SoundBuffer buffer_super;
@@ -15,18 +13,25 @@ void audio_loop(models::GamePlay* gameplay)
         samples_normal[i] = 4000;
         samples_super[i] = 15000;
     }
-    buffer_normal.loadFromSamples(&samples_normal[0], SAMPLES_SIZE, 1, 44100);
-    buffer_super.loadFromSamples(&samples_super[0], SAMPLES_SIZE, 1, 44100);
+    buffer_normal.loadFromSamples(&samples_normal[0], SAMPLES_SIZE, 1, 10000);
+    buffer_super.loadFromSamples(&samples_super[0], SAMPLES_SIZE, 1, 10000);
 
     sound.setBuffer(buffer_normal);
 
-    while (gameplay->gamestate != models::GAME_STATE_ENDED) {
-        sound.play();
-        if (gameplay->pac.state == models::PacmanState::NORMAL) {
-            sound.setBuffer(buffer_normal);
-        } else if (gameplay->pac.state == models::PacmanState::SUPER) {
-            sound.setBuffer(buffer_super);
-        } else {
+    while (true) {
+        switch (game->curr_state) {
+        case models::GlobalStates::PLAYING:
+            if (game->gameplay.pac.state == models::PacmanState::NORMAL) {
+                if (sound.getBuffer() != &buffer_normal)
+                    sound.setBuffer(buffer_normal);
+            } else if (game->gameplay.pac.state == models::PacmanState::SUPER) {
+                if (sound.getBuffer() != &buffer_super)
+                    sound.setBuffer(buffer_super);
+            }
+            sound.play();
+            break;
+        default:
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
             break;
         }
     }

@@ -1,6 +1,6 @@
 #include "../defines.h"
-#include "../models/GamePlay.h"
-#include "../view/GamePlay.h"
+#include "../models/Game.h"
+#include "../view/Game.h"
 
 #if USE_SFML
 #include "SFML/Graphics.hpp"
@@ -13,7 +13,7 @@
 #define _THREADS_DISPLAY_H_
 
 #if USE_SFML
-void display_loop(models::GamePlay* gameplay);
+void display_loop(models::Game* game);
 #else
 void display_loop(UINT id);
 #endif
