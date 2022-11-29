@@ -19,7 +19,7 @@ void Agent::update_position(float vel_factor)
 
 misc::Vector<int> get_pos_tile(misc::Vector<float> pos)
 {
-    return misc::Vector<int>(pos.x, pos.y);
+    return misc::Vector<int>((int)pos.x, (int)pos.y);
 }
 
 misc::Vector<int> Agent::get_agent_tile()

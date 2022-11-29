@@ -67,6 +67,14 @@ extern __weak void IntDefaultHandler(void);
 
 //*****************************************************************************
 //
+// External declarations for the interrupt handlers used by the application.
+//
+//*****************************************************************************
+//extern void ADC0SS3IntHandler(void);
+//extern void ADC1SS3IntHandler(void);
+
+//*****************************************************************************
+//
 // The entry point for the application startup code.
 //
 //*****************************************************************************

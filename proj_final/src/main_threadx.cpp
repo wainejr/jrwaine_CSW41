@@ -19,6 +19,8 @@
 #include "driverlib/sysctl.h"
 #include "inc/hw_memmap.h"
 
+#include "drivers/all.h"
+
 /*------------------------------------------------------------------------------
  *
  *      Gloval vars declarations
@@ -69,11 +71,21 @@ void    timer_expiration_3(ULONG expiration_input);
 
 /* Define main entry point.  */
 
+void test_joystick(){
+    while(true){
+      int val_x = drivers::get_joystick_x();
+      int val_y = drivers::get_joystick_y();
+      misc::Vector<int> pos = drivers::get_joystick_pos();
+      printf("x y %d %d pos (%d %d)\n", val_x, val_y, pos.x, pos.y);
+    }
+}
+
 int main()
 {
     /* Sets the system clock to 120 MHz. */
     SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_240), 120000000);
-
+    drivers::setup_all();
+    
     /* Enable GPIO Port N and wait for it to be ready. */
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);
     while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION));

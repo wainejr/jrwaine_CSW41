@@ -2,23 +2,11 @@
 
 using namespace drivers;
 
-void drivers::setup_joystick(){
-    // Configure the joystick select
-    // Enable GPIO Port C
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
-    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOC));
-    
-    // Configure pin C6 for GPIO input
-    GPIOPinTypeGPIOInput(GPIO_PORTC_BASE, GPIO_PIN_6);
-    
-    // Enable interrupts for both edges
-    GPIOIntTypeSet(GPIO_PORTC_BASE, GPIO_PIN_6, GPIO_BOTH_EDGES);
-    
-    // Enable peripheral interrupts
-    GPIOIntEnable(GPIO_PORTC_BASE, GPIO_INT_PIN_6);
-    // Enable interrupts in NVIC
-    IntEnable(INT_GPIOC);
-    
+uint32_t val_horizontal = 0;
+uint32_t val_vertical = 0;
+
+
+void setup_horizontal_axis(){
     // Configure the joystick horizontal axis
     // Enable GPIO Port E
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
@@ -46,15 +34,20 @@ void drivers::setup_joystick(){
     // Sets ADC hardware oversampling factor to maximum for more accurate values
     ADCHardwareOversampleConfigure(ADC0_BASE, 64);
     
+    // Register Interrupt function
+    // IntRegister(INT_ADC0SS3, ADC0SS3IntHandler);
+
     // Enable peripheral interrupts
     // ADCIntEnable(ADC0_BASE, 3);
     
     // Enable interrupts in NVIC
-    IntEnable(INT_ADC0SS3);
+    // IntEnable(INT_ADC0SS3);
     
     //Start sequencer 3
-    ADCSequenceEnable(ADC0_BASE, 3);
-    
+    ADCSequenceEnable(ADC0_BASE, 3);   
+}
+
+void setup_vertical_axis(){
     // Configure the joystick vertical axis
     // Configure pin E3 as analog-to-digital converter input
     GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_3);
@@ -75,17 +68,27 @@ void drivers::setup_joystick(){
     // Sets ADC hardware oversampling factor to maximum for more accurate values
     ADCHardwareOversampleConfigure(ADC0_BASE, 64);
     
+    // Register Interrupt function
+    // IntRegister(INT_ADC1SS3, ADC1SS3IntHandler);
+    
     // Enable peripheral interrupts
-    ADCIntEnable(ADC1_BASE, 3);
-
+    // ADCIntEnable(ADC1_BASE, 3);
+    
     // Enable interrupts in NVIC
-    IntEnable(INT_ADC1SS3);
+    // IntEnable(INT_ADC1SS3);
     
     // Start sequencer 3
     ADCSequenceEnable(ADC1_BASE, 3);
 }
 
-const int THRESHOLD = 16000;
+
+void drivers::setup_joystick(){
+    setup_horizontal_axis();
+    setup_vertical_axis();
+}
+
+const int THRESHOLD = 1024;
+const int AVERAGE_VALUE_ADC = 2048;
 
 int analog_to_dig(int analog_val){
     if(analog_val < -THRESHOLD){
@@ -98,15 +101,21 @@ int analog_to_dig(int analog_val){
 }
 
 int drivers::get_joystick_x(){
-    return 0;
+    // Read the ADC conversion value for the horizontal axis
+    ADCSequenceDataGet(ADC0_BASE, 3, &val_horizontal);
+    
+    return ((int) val_horizontal - AVERAGE_VALUE_ADC);
 }
 
 int drivers::get_joystick_y(){
-    return 0;
+    // Read the ADC conversion value for the vertical axis
+    ADCSequenceDataGet(ADC1_BASE, 3, &val_vertical);
+    
+    return ((int) val_vertical - AVERAGE_VALUE_ADC);
 }
 
 
-misc::Vector<int> get_joystick_pos(){
+misc::Vector<int> drivers::get_joystick_pos(){
     int analog_x = get_joystick_x();
     int analog_y = get_joystick_y();
 

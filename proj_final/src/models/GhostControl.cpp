@@ -8,7 +8,7 @@ GhostControl::GhostControl(GhostControlType control_type, GamePlay* gameplay, Gh
     this->ghost = ghost;
     this->control_type = control_type;
 
-    this->last_dir = misc::Vector<int>(ghost->direction.x, ghost->direction.y);
+    this->last_dir = misc::Vector<int>((int)ghost->direction.x, (int)ghost->direction.y);
     this->last_tile = ghost->get_agent_tile();
     this->curr_tile = this->last_tile;
     this->last_tile_dir_updated = misc::Vector<int>(0, 0);
