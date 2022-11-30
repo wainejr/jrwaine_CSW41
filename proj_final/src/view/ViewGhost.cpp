@@ -14,10 +14,11 @@ void ViewGhost::draw(DrawContext* context)
     float center_pos_x = this->ghost->pos.x + 0.5;
     float center_pos_y = this->ghost->pos.y + 0.5;
     globals::get_normalized_pos(center_pos_x, center_pos_y, &abs_pos_x, &abs_pos_y);
+
+#if USE_SFML
     abs_pos_x = abs_pos_x - globals::GHOST_RADIUS;
     abs_pos_y = abs_pos_y - globals::GHOST_RADIUS;
 
-#if USE_SFML
     sf::CircleShape ghost(globals::GHOST_RADIUS);
     if (this->ghost->state == models::GhostState::AFRAID) {
         ghost.setFillColor(sf::Color(20, 20, 255));
@@ -26,10 +27,12 @@ void ViewGhost::draw(DrawContext* context)
     } else {
         switch (this->ghost->color) {
         case models::GhostColors::BLUE:
-            ghost.setFillColor(sf::Color(0, 255, 255));
+            // ghost.setFillColor(sf::Color(0, 255, 255));
+            GrContextForegroundSet(context, ClrAliceBlue);
             break;
         case models::GhostColors::RED:
             ghost.setFillColor(sf::Color(255, 0, 0));
+            GrContextForegroundSet(context, ClrAliceBlue);
             break;
         case models::GhostColors::PINK:
             ghost.setFillColor(sf::Color(255, 105, 180));
@@ -44,5 +47,30 @@ void ViewGhost::draw(DrawContext* context)
 
     ghost.setPosition(sf::Vector2f(abs_pos_x, abs_pos_y));
     window->draw(ghost);
+#else
+    if (this->ghost->state == models::GhostState::AFRAID) {
+      GrContextForegroundSet(context, ClrBlue);
+    } else if (this->ghost->state == models::GhostState::IN_CAVE) {
+        GrContextForegroundSet(context, ClrWhiteSmoke);
+    } else {
+        switch (this->ghost->color) {
+        case models::GhostColors::BLUE:
+            GrContextForegroundSet(context, ClrCyan);
+            break;
+        case models::GhostColors::RED:
+            GrContextForegroundSet(context, ClrRed);
+            break;
+        case models::GhostColors::PINK:
+            GrContextForegroundSet(context, ClrPink);
+            break;
+        case models::GhostColors::ORANGE:
+            GrContextForegroundSet(context, ClrOrange);
+            break;
+        default:
+            break;
+        }
+    }
+    GrCircleFill(context, abs_pos_x, abs_pos_y, globals::GHOST_RADIUS);
 #endif
+    
 }

@@ -52,6 +52,11 @@ TX_TIMER                timer_3;
 
 UCHAR                   byte_pool_memory[BYTE_POOL_SIZE];
 
+tContext sContext;
+models::Game game;
+view::ViewGame view_game(&game);
+
+
 /*------------------------------------------------------------------------------
  *
  *      Functions and Methods
@@ -100,9 +105,6 @@ void test_buzzer(){
     }
 }
 
-//To print on the screen
-tContext sContext;
-
 void test_display(){
     GrContextForegroundSet(&sContext, ClrWhite);
     GrContextBackgroundSet(&sContext, ClrBlack);
@@ -123,9 +125,27 @@ void test_display(){
 }
 
 void test_menu_draw(){
-  
-
+    game.into_menu();
+    view_game.draw(&sContext);
+    
+    while(true){}
 }
+
+void test_game_draw(){
+    game.into_playing();
+    view_game.draw(&sContext);
+    
+    while(true){}
+}
+
+void test_score_draw(){
+    game.into_showing_score();
+    game.gameplay.score.curr_score = 128.8f;
+    view_game.draw(&sContext);
+    
+    while(true){}
+}
+
 
 /* Define main entry point.  */
 int main()
@@ -134,7 +154,7 @@ int main()
     uint32_t ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_240), 120000000);
     drivers::setup_all(&sContext);
 
-    test_display();
+    test_game_draw();
 
     /* Enable GPIO Port N and wait for it to be ready. */
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);

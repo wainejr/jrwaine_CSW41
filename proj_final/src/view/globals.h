@@ -14,8 +14,8 @@ namespace globals {
 
     const float SMALL_BALL_SIZE = 1.0f;
     const float BIG_BALL_SIZE = 2.0f;
-    const float PACMAN_RADIUS = TILE_SIZE / 2.0f * 0.9f;
-    const float GHOST_RADIUS = TILE_SIZE / 2.0f * 0.9f;
+    const float PACMAN_RADIUS = 2.0f; // TILE_SIZE / 2.0f * 0.9f;
+    const float GHOST_RADIUS = 2.0f; // TILE_SIZE / 2.0f * 0.9f;
 
     const int MAZE_OFFSET_Y = (RESOLUTION_Y - TILE_SIZE * models::consts::MAZE_SIZE_Y) / 2;
     const int MAZE_OFFSET_X = (RESOLUTION_X - TILE_SIZE * models::consts::MAZE_SIZE_X) / 2;

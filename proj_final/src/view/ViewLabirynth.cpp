@@ -36,6 +36,23 @@ void ViewLabyrinth::draw_maze_square(DrawContext* context, misc::Vector<int> pos
     }
     square.setPosition(sf::Vector2f(abs_pos_x, abs_pos_y));
     context->draw(square);
+#else
+    switch(tl){
+    case models::TilesTypes::WALL:
+      GrContextForegroundSet(context, ClrPurple);  
+      break;
+    case models::TilesTypes::TUNNEL:
+      GrContextForegroundSet(context, ClrBeige);  
+      break;
+    default:
+      break;
+    }
+    tRectangle rect{
+      (int16_t)abs_pos_x, 
+      (int16_t)abs_pos_y, 
+      (int16_t)(abs_pos_x+globals::TILE_SIZE), 
+      (int16_t)(abs_pos_y+globals::TILE_SIZE)};
+    GrRectFill(context, &rect);
 #endif
 }
 
@@ -67,6 +84,15 @@ void ViewLabyrinth::draw_small_ball(DrawContext* context, misc::Vector<int> pos_
 
     small_ball.setPosition(abs_pos_x, abs_pos_y);
     context->draw(small_ball);
+#else
+   GrContextForegroundSet(context, ClrWhite);
+   
+    tRectangle rect{
+      (int16_t)(abs_pos_x), 
+      (int16_t)(abs_pos_y), 
+      (int16_t)(abs_pos_x+1), 
+      (int16_t)(abs_pos_y+1)};
+    GrRectFill(context, &rect);
 #endif
 }
 
@@ -85,5 +111,15 @@ void ViewLabyrinth::draw_big_ball(DrawContext* context, misc::Vector<int> pos_ba
 
     big_ball.setPosition(abs_pos_x, abs_pos_y);
     context->draw(big_ball);
+
+#else
+   GrContextForegroundSet(context, ClrWhite);
+   
+    tRectangle rect{
+      (int16_t)(abs_pos_x), 
+      (int16_t)(abs_pos_y), 
+      (int16_t)(abs_pos_x+2), 
+      (int16_t)(abs_pos_y+2)};
+    GrRectFill(context, &rect);
 #endif
 }

@@ -1,6 +1,8 @@
 #include "../models/Game.h"
 #include "Base.h"
 #include "GamePlay.h"
+#include <string>
+#include <iostream>
 
 #ifndef _VIEW_GAME_H_
 #define _VIEW_GAME_H_
