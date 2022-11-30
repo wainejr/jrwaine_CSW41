@@ -10,7 +10,7 @@ public:
     ViewPacMan(models::PacMan* pac);
 
     models::PacMan* pac;
-    void draw(sf::RenderWindow* window);
+    void draw(DrawContext* window);
 };
 }
 #endif

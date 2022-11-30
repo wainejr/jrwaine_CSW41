@@ -12,7 +12,7 @@ class ViewGamePlay : public Base {
 public:
     ViewGamePlay(models::GamePlay* gameplay);
 
-    void draw(sf::RenderWindow* window);
+    void draw(DrawContext* context);
     models::GamePlay* gameplay;
 
     ViewPacMan view_pac;

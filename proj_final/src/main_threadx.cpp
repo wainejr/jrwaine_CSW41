@@ -22,6 +22,7 @@
 #include "inc/hw_memmap.h"
 
 #include "drivers/all.h"
+#include "view/Game.h"
 
 /*------------------------------------------------------------------------------
  *
@@ -103,28 +104,35 @@ void test_buzzer(){
 tContext sContext;
 
 void test_display(){
-    GrContextInit(&sContext, &g_sCfaf128x128x16);
-
-    GrFlush(&sContext);
-    GrContextFontSet(&sContext, g_psFontFixed6x8);
-
     GrContextForegroundSet(&sContext, ClrWhite);
     GrContextBackgroundSet(&sContext, ClrBlack);
 
-
-    GrStringDraw(&sContext,"Exemplaaa", -1, 0, (sContext.psFont->ui8Height+2)*0, true);
+    GrStringDraw(&sContext,"Exempleae", -1, 0, (sContext.psFont->ui8Height+2)*0, true);
     GrStringDraw(&sContext,"Tiva + BoosterPack", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
     GrStringDraw(&sContext,"---------------------", -1, 0, (sContext.psFont->ui8Height+2)*2, true);
+    tRectangle rect{
+      40, 40, 80, 80
+    };
+
+    // GrRectFill(&sContext, &rect, (unsigned long)greenColor);
+    GrContextForegroundSet(&sContext, ClrGreen);
+    GrRectFill(&sContext, &rect);
+    GrRectDraw(&sContext, &rect);
+    
     while(true){}
 }
 
+void test_menu_draw(){
+  
+
+}
 
 /* Define main entry point.  */
 int main()
 {
     /* Sets the system clock to 120 MHz. */
     uint32_t ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_240), 120000000);
-    drivers::setup_all();
+    drivers::setup_all(&sContext);
 
     test_display();
 

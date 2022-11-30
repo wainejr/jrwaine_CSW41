@@ -19,6 +19,6 @@
 #define _DRIVER_ALL_H_
 
 namespace drivers {
-    void setup_all();
+    void setup_all(tContext* pContext);
 }
 #endif

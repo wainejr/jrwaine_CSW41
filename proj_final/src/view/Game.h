@@ -7,15 +7,15 @@
 
 namespace view {
 class ViewGame : public Base {
-    void draw_score(sf::RenderWindow* window);
-    void draw_menu(sf::RenderWindow* window);
+    void draw_score(DrawContext* context);
+    void draw_menu(DrawContext* context);
 
 public:
     ViewGame(models::Game* game);
     models::Game* game;
     ViewGamePlay view_gameplay;
 
-    void draw(sf::RenderWindow* window);
+    void draw(DrawContext* context);
     void update_view_gameplay();
 };
 }

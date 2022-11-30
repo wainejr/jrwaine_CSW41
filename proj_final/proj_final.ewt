@@ -2969,6 +2969,45 @@
         </group>
         <group>
             <name>view</name>
+            <file>
+                <name>$PROJ_DIR$\src\view\Base.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\view\Game.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\view\GamePlay.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\view\Ghost.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\view\globals.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\view\Labirynth.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\view\PacMan.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\view\ViewGame.cpp</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\view\ViewGamePlay.cpp</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\view\ViewGhost.cpp</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\view\viewGlobals.cpp</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\view\ViewLabirynth.cpp</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\view\ViewPacMan.cpp</name>
+            </file>
         </group>
         <file>
             <name>$PROJ_DIR$\src\defines.h</name>

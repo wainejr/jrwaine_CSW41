@@ -7,7 +7,7 @@ ViewGhost::ViewGhost(models::Ghost* ghost)
 {
 }
 
-void ViewGhost::draw(sf::RenderWindow* window)
+void ViewGhost::draw(DrawContext* context)
 {
     float abs_pos_x, abs_pos_y;
     const float factor = 0.8f;

@@ -7,22 +7,22 @@ ViewLabyrinth::ViewLabyrinth(models::Labyrinth* lab)
 {
 }
 
-void ViewLabyrinth::draw(sf::RenderWindow* window)
+void ViewLabyrinth::draw(DrawContext* context)
 {
-    this->draw_labyrinth_maze(window);
+    this->draw_labyrinth_maze(context);
     for (int i = 0; i < 28; i++) {
         for (int j = 0; j < 31; j++) {
             models::TilesTypes tl = lab->lab[j][i];
             if (tl == models::TilesTypes::SMALL_BALL) {
-                this->draw_small_ball(window, misc::Vector<int>(i, j));
+                this->draw_small_ball(context, misc::Vector<int>(i, j));
             } else if (tl == models::TilesTypes::SUPER_BALL) {
-                this->draw_big_ball(window, misc::Vector<int>(i, j));
+                this->draw_big_ball(context, misc::Vector<int>(i, j));
             }
         }
     }
 }
 
-void ViewLabyrinth::draw_maze_square(sf::RenderWindow* window, misc::Vector<int> pos, models::TilesTypes tl)
+void ViewLabyrinth::draw_maze_square(DrawContext* context, misc::Vector<int> pos, models::TilesTypes tl)
 {
     float abs_pos_x, abs_pos_y;
     globals::get_normalized_pos((float)pos.x, (float)pos.y, &abs_pos_x, &abs_pos_y);
@@ -35,56 +35,55 @@ void ViewLabyrinth::draw_maze_square(sf::RenderWindow* window, misc::Vector<int>
         square.setFillColor(sf::Color(200, 150, 220));
     }
     square.setPosition(sf::Vector2f(abs_pos_x, abs_pos_y));
-    window->draw(square);
+    context->draw(square);
 #endif
 }
 
-void ViewLabyrinth::draw_labyrinth_maze(sf::RenderWindow* window)
+void ViewLabyrinth::draw_labyrinth_maze(DrawContext* context)
 {
     for (int i = 0; i < 28; i++) {
         for (int j = 0; j < 31; j++) {
             models::TilesTypes tl = this->lab->lab[j][i];
             if (tl == models::TilesTypes::TUNNEL || tl == models::TilesTypes::WALL) {
-                this->draw_maze_square(window, misc::Vector<int>(i, j), tl);
+                this->draw_maze_square(context, misc::Vector<int>(i, j), tl);
             }
         }
     }
 }
 
-void ViewLabyrinth::draw_small_ball(sf::RenderWindow* window, misc::Vector<int> pos_ball)
+void ViewLabyrinth::draw_small_ball(DrawContext* context, misc::Vector<int> pos_ball)
 {
     float abs_pos_x, abs_pos_y;
     globals::get_normalized_pos((float)pos_ball.x, (float)pos_ball.y, &abs_pos_x, &abs_pos_y);
 
+    // Sum one pixel position to tile
+    abs_pos_x = abs_pos_x + 1;
+    abs_pos_y = abs_pos_y + 1;
 #if USE_SFML
     // sf::RenderWindow* winddow = &this->window;
     sf::RectangleShape small_ball(sf::Vector2f(globals::SMALL_BALL_SIZE, globals::SMALL_BALL_SIZE));
     small_ball.setFillColor(sf::Color(255, 255, 255));
 
-    // Sum one pixel position to tile
-    abs_pos_x = abs_pos_x + 1;
-    abs_pos_y = abs_pos_y + 1;
 
     small_ball.setPosition(abs_pos_x, abs_pos_y);
-    window->draw(small_ball);
+    context->draw(small_ball);
 #endif
 }
 
-void ViewLabyrinth::draw_big_ball(sf::RenderWindow* window, misc::Vector<int> pos_ball)
+void ViewLabyrinth::draw_big_ball(DrawContext* context, misc::Vector<int> pos_ball)
 {
     float abs_pos_x, abs_pos_y;
     globals::get_normalized_pos((float)pos_ball.x, (float)pos_ball.y, &abs_pos_x, &abs_pos_y);
 
+    // Sum one pixel position to tile
+    abs_pos_x = abs_pos_x + 1;
+    abs_pos_y = abs_pos_y + 1;
 #if USE_SFML
     // sf::RenderWindow* winddow = &this->window;
     sf::RectangleShape big_ball(sf::Vector2f(globals::BIG_BALL_SIZE, globals::BIG_BALL_SIZE));
     big_ball.setFillColor(sf::Color(255, 255, 255));
 
-    // Sum one pixel position to tile
-    abs_pos_x = abs_pos_x + 1;
-    abs_pos_y = abs_pos_y + 1;
-
     big_ball.setPosition(abs_pos_x, abs_pos_y);
-    window->draw(big_ball);
+    context->draw(big_ball);
 #endif
 }

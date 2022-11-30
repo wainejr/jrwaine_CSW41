@@ -13,8 +13,9 @@ void ViewGame::update_view_gameplay()
     this->view_gameplay = ViewGamePlay(&game->gameplay);
 }
 
-void ViewGame::draw_score(sf::RenderWindow* window)
+void ViewGame::draw_score(DrawContext* context)
 {
+#if USE_SFML
     sf::Text text_score;
 
     std::string str_score = "Score: ";
@@ -23,10 +24,14 @@ void ViewGame::draw_score(sf::RenderWindow* window)
     text_score.setString(str_score);
     text_score.setPosition(sf::Vector2f(128 / 2 - 30, 128 / 2 - 5));
 
-    window->draw(text_score);
+    context->draw(text_score);
+#else
+    
+    
+#endif
 }
 
-void ViewGame::draw_menu(sf::RenderWindow* window)
+void ViewGame::draw_menu(DrawContext* context)
 {
     printf("drawing menu\n");
     // sf::Text text_new_game;
@@ -60,20 +65,20 @@ void ViewGame::draw_menu(sf::RenderWindow* window)
 #endif
 }
 
-void ViewGame::draw(sf::RenderWindow* window)
+void ViewGame::draw(DrawContext* context)
 {
     // clear the window with black color
-    window->clear(sf::Color::Black);
+    // context->clear(sf::Color::Black);
 
     switch (game->curr_state) {
     case models::GlobalStates::PLAYING:
-        this->view_gameplay.draw(window);
+        this->view_gameplay.draw(context);
         break;
     case models::GlobalStates::MENU:
-        this->draw_menu(window);
+        this->draw_menu(context);
         break;
     case models::GlobalStates::SHOWING_SCORE:
-        this->draw_score(window);
+        this->draw_score(context);
         break;
     default:
         break;

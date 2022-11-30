@@ -13,15 +13,17 @@ ViewGamePlay::ViewGamePlay(models::GamePlay* gameplay)
     this->gameplay = gameplay;
 }
 
-void ViewGamePlay::draw(sf::RenderWindow* window)
+void ViewGamePlay::draw(DrawContext* context)
 {
-    this->view_labyrinth.draw(window);
-    this->view_ghosts[0].draw(window);
-    this->view_ghosts[1].draw(window);
-    this->view_ghosts[2].draw(window);
-    this->view_ghosts[3].draw(window);
-    this->view_pac.draw(window);
-
+    this->view_labyrinth.draw(context);
+    this->view_ghosts[0].draw(context);
+    this->view_ghosts[1].draw(context);
+    this->view_ghosts[2].draw(context);
+    this->view_ghosts[3].draw(context);
+    this->view_pac.draw(context);
+    
+#if USE_SFML
     // end the current frame
     window->display();
+#endif
 }

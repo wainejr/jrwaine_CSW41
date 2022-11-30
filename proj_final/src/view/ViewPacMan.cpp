@@ -7,11 +7,11 @@ ViewPacMan::ViewPacMan(models::PacMan* pac)
 {
 }
 
-void ViewPacMan::draw(sf::RenderWindow* window)
+void ViewPacMan::draw(DrawContext* context)
 {
     float abs_pos_x, abs_pos_y;
-    float center_pos_x = this->pac->pos.x + 0.5;
-    float center_pos_y = this->pac->pos.y + 0.5;
+    float center_pos_x = this->pac->pos.x + 0.5f;
+    float center_pos_y = this->pac->pos.y + 0.5f;
     globals::get_normalized_pos(center_pos_x, center_pos_y, &abs_pos_x, &abs_pos_y);
     abs_pos_x = abs_pos_x - globals::PACMAN_RADIUS;
     abs_pos_y = abs_pos_y - globals::PACMAN_RADIUS;

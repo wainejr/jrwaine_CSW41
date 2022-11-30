@@ -10,7 +10,7 @@ public:
     ViewGhost(models::Ghost* ghost);
 
     models::Ghost* ghost;
-    void draw(sf::RenderWindow* window);
+    void draw(DrawContext* window);
 };
 }
 #endif
