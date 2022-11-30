@@ -2,7 +2,7 @@
 
 using namespace drivers;
 
-const uint32_t DUTY_CYCLE = 320;
+const uint32_t DUTY_CYCLE = 200;
 
 void delayMS(int ms) {
     SysCtlDelay( (SysCtlClockGet()/(3*1000))*ms ) ;
@@ -34,9 +34,9 @@ void drivers::setup_buzzer(){
     // Use this value to set the period.
     PWMGenPeriodSet(PWM0_BASE, PWM_GEN_0, DUTY_CYCLE);
     
-    // Set the pulse width of PWM1 for a 25% duty cycle.
+    // Set the pulse width of PWM1 for a 100% duty cycle.
     //
-    PWMPulseWidthSet(PWM0_BASE, PWM_OUT_1, DUTY_CYCLE/4);
+    PWMPulseWidthSet(PWM0_BASE, PWM_OUT_1, DUTY_CYCLE);
     
     // Start the timers in generator 0.
     PWMGenEnable(PWM0_BASE, PWM_GEN_0);
@@ -45,6 +45,7 @@ void drivers::setup_buzzer(){
     PWMOutputState(PWM0_BASE, PWM_OUT_1_BIT, true);
     
     //Fade
+    /*
     bool fadeUp = true;
     unsigned long increment = 10;
     unsigned long pwmNow = 100;
@@ -64,10 +65,33 @@ void drivers::setup_buzzer(){
             }
         }
         PWMPulseWidthSet(PWM0_BASE, PWM_OUT_1, pwmNow);
-    }
+    }*/
 }
 
 void drivers::update_buzzer_value(float width){
+  /*
+      //Fade
+    bool fadeUp = true;
+    volatile unsigned long increment = 10;
+    volatile unsigned long pwmNow = 100;
+    while(1)
+    {
+        delayMS(20);
+        if (fadeUp) {
+            pwmNow += increment;
+            if (pwmNow >= DUTY_CYCLE) { 
+              fadeUp = false; 
+            }
+        }
+        else {
+            pwmNow -= increment;
+            if (pwmNow <= 10) { 
+              fadeUp = true; 
+            }
+        }
+        PWMPulseWidthSet(PWM0_BASE, PWM_OUT_1, 0);
+    }
+*/
   float pwm = width;
   pwm = pwm < 0? 0 : pwm;
   pwm = pwm > 1 ? 1 : pwm;
