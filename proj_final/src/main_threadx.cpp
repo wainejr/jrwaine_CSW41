@@ -15,6 +15,7 @@
 #include "tx_api.h"
 #include "stdbool.h"
 #include "stdint.h"
+#include "stdio.h"
 #include "driverlib/gpio.h"
 #include "driverlib/sysctl.h"
 #include "inc/hw_memmap.h"
@@ -69,8 +70,6 @@ void    timer_expiration_1(ULONG expiration_input);
 void    timer_expiration_2(ULONG expiration_input);
 void    timer_expiration_3(ULONG expiration_input);
 
-/* Define main entry point.  */
-
 void test_joystick(){
     while(true){
       int val_x = drivers::get_joystick_x();
@@ -80,11 +79,35 @@ void test_joystick(){
     }
 }
 
+void test_button(){
+    while(true){
+      bool button = drivers::get_button_pressed();
+      printf("button %d\n", (int)button);
+    }
+}
+
+void test_buzzer(){
+    while(true){
+      bool button = drivers::get_button_pressed();
+      if(button){
+        drivers::update_buzzer_value(1.0f);
+      }else{
+        drivers::update_buzzer_value(0.0f);
+      }
+      SysCtlDelay(10000);
+    }
+}
+
+
+/* Define main entry point.  */
 int main()
 {
     /* Sets the system clock to 120 MHz. */
-    SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_240), 120000000);
+    uint32_t ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_240), 120000000);
     drivers::setup_all();
+    
+    test_buzzer();
+    
     
     /* Enable GPIO Port N and wait for it to be ready. */
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);

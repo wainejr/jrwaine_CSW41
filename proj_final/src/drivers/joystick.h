@@ -10,10 +10,8 @@
  *
  */
 
-#include "../misc/Vector.h"
 #include <stdbool.h>
 #include <stdint.h>
-#include <stdio.h>
 #include "driverlib/adc.h"
 #include "driverlib/gpio.h"
 #include "driverlib/pin_map.h"
@@ -21,6 +19,8 @@
 #include "driverlib/interrupt.h"
 #include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
+
+#include "../misc/Vector.h"
 
 #ifndef _DRIVER_JOYSTICK_H_
 #define _DRIVER_JOYSTICK_H_
