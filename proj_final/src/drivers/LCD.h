@@ -10,6 +10,8 @@
  *
  */
 
+#include "cfaf128x128x16.h"
+
 #ifndef _DRIVER_LCD_H_
 #define _DRIVER_LCD_H_
 

@@ -2165,6 +2165,9 @@
             <name>$PROJ_DIR$\..\..\TivaWare_C_Series-2.2.0.295\driverlib\ewarm\Exe\driverlib.a</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\TivaWare_C_Series-2.2.0.295\grlib\ewarm\Exe\grlib.a</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\threadx\ports\cortex_m4\iar\example_build\Debug\Exe\tx.a</name>
         </file>
     </group>
@@ -2189,6 +2192,12 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\src\drivers\buzzer.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\drivers\cfaf128x128x16.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\drivers\cfaf128x128x16.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\src\drivers\joystick.cpp</name>

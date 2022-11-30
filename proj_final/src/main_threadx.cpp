@@ -99,62 +99,25 @@ void test_buzzer(){
     }
 }
 
+//To print on the screen
+tContext sContext;
 
 void test_display(){
-    tContext sContext;
-    tRectangle sRect;
-    tDisplay display;
-  /*
-    //
-    // Initialize the graphics context.
-    //
-    GrContextInit(&sContext, &display);
+    GrContextInit(&sContext, &g_sCfaf128x128x16);
 
-    //
-    // Fill the top 24 rows of the screen with blue to create the banner.
-    //
-    sRect.i16XMin = 0;
-    sRect.i16YMin = 0;
-    sRect.i16XMax = GrContextDpyWidthGet(&sContext) - 1;
-    sRect.i16YMax = 23;
-    GrContextForegroundSet(&sContext, ClrDarkBlue);
-    GrRectFill(&sContext, &sRect);
-
-    //
-    // Put a white box around the banner.
-    //
-    GrContextForegroundSet(&sContext, ClrWhite);
-    GrRectDraw(&sContext, &sRect);
-
-    //
-    // Put the application name in the middle of the banner.
-    //
-    GrContextFontSet(&sContext, g_psFontCm12);
-    GrStringDrawCentered(&sContext, "hello", -1,
-                         GrContextDpyWidthGet(&sContext) / 2, 10, 0);
-
-    //
-    // Say hello using the Computer Modern 40 point font.
-    //
-    GrContextFontSet(&sContext, g_psFontCm12/*g_psFontFixed6x8);
-    GrStringDrawCentered(&sContext, "Hello World!", -1,
-                         GrContextDpyWidthGet(&sContext) / 2,
-                         ((GrContextDpyHeightGet(&sContext) - 24) / 2) + 24,
-                         0);
-
-    //
-    // Flush any cached drawing operations.
-    //
     GrFlush(&sContext);
+    GrContextFontSet(&sContext, g_psFontFixed6x8);
 
-    //
-    // We are finished. Hang around doing nothing.
-    //
-    while(1)
-    {
-    }
-    */
+    GrContextForegroundSet(&sContext, ClrWhite);
+    GrContextBackgroundSet(&sContext, ClrBlack);
+
+
+    GrStringDraw(&sContext,"Exemplaaa", -1, 0, (sContext.psFont->ui8Height+2)*0, true);
+    GrStringDraw(&sContext,"Tiva + BoosterPack", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
+    GrStringDraw(&sContext,"---------------------", -1, 0, (sContext.psFont->ui8Height+2)*2, true);
+    while(true){}
 }
+
 
 /* Define main entry point.  */
 int main()
@@ -162,10 +125,9 @@ int main()
     /* Sets the system clock to 120 MHz. */
     uint32_t ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_240), 120000000);
     drivers::setup_all();
-    
+
     test_display();
-    
-    
+
     /* Enable GPIO Port N and wait for it to be ready. */
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);
     while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION));
