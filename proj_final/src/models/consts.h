@@ -56,7 +56,7 @@ namespace consts {
     };
 
     // Update state every 10 ms,
-    const float STATE_UPDATE_SEC_INTERVAL = 0.010f;
+    const float STATE_UPDATE_SEC_INTERVAL = 0.020f;
 
     const int SMALL_BALL_SCORE = 10;
     const int SUPER_BALL_SCORE = 50;
