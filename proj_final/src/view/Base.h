@@ -6,8 +6,8 @@
 
 namespace view {
 
-typedef tContext DrawContext; 
- 
+typedef tContext DrawContext;
+
 class Base {
 public:
     virtual void draw(DrawContext* context) = 0;

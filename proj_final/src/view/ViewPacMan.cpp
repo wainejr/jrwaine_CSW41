@@ -3,8 +3,8 @@
 using namespace view;
 
 ViewPacMan::ViewPacMan(models::PacMan* pac)
-    : ViewAgent(pac),
-    pac(pac)
+    : ViewAgent(pac)
+    , pac(pac)
 {
 }
 

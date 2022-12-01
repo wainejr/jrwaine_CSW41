@@ -17,7 +17,7 @@ void ViewAgent::draw_agent(DrawContext* context, unsigned long color)
 #if USE_SFML
     abs_pos_x = abs_pos_x - globals::PACMAN_RADIUS;
     abs_pos_y = abs_pos_y - globals::PACMAN_RADIUS;
-    
+
     sf::CircleShape pac(globals::PACMAN_RADIUS);
 
     pac.setPosition(sf::Vector2f(abs_pos_x, abs_pos_y));
@@ -26,19 +26,19 @@ void ViewAgent::draw_agent(DrawContext* context, unsigned long color)
     window->draw(pac);
 #else
     GrContextForegroundSet(context, ClrBlack);
-    tRectangle black_background{(int16_t)(floor(abs_pos_x-globals::TILE_SIZE/2)), 
-      (int16_t)(floor(abs_pos_y-globals::TILE_SIZE/2)),
-      (int16_t)(ceil(abs_pos_x+globals::TILE_SIZE/2)), 
-      (int16_t)(ceil(abs_pos_y+globals::TILE_SIZE/2))};
-    
-    if(this->agent->direction.x == -1){
-      black_background.i16XMax += 1;
-    }else if(this->agent->direction.x == 1){
-      black_background.i16XMin -= 1;
-    }else if(this->agent->direction.y == 1){
-      black_background.i16YMax += 1;
-    }else if(this->agent->direction.y == -1){
-      black_background.i16YMin -= 1;
+    tRectangle black_background { (int16_t)(floor(abs_pos_x - globals::TILE_SIZE / 2)),
+        (int16_t)(floor(abs_pos_y - globals::TILE_SIZE / 2)),
+        (int16_t)(ceil(abs_pos_x + globals::TILE_SIZE / 2)),
+        (int16_t)(ceil(abs_pos_y + globals::TILE_SIZE / 2)) };
+
+    if (this->agent->direction.x == -1) {
+        black_background.i16XMax += 1;
+    } else if (this->agent->direction.x == 1) {
+        black_background.i16XMin -= 1;
+    } else if (this->agent->direction.y == 1) {
+        black_background.i16YMax += 1;
+    } else if (this->agent->direction.y == -1) {
+        black_background.i16YMin -= 1;
     }
 
     // GrRectFill(context, &black_background);

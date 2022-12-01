@@ -13,7 +13,7 @@ void ViewGame::draw_score(DrawContext* context)
     int score = (int)round((double)this->game->gameplay.score.curr_score);
     std::string text = "Score: ";
     text += std::to_string(score);
-    
+
 #if USE_SFML
     sf::Text text_score;
 
@@ -21,26 +21,26 @@ void ViewGame::draw_score(DrawContext* context)
     text_score.setPosition(sf::Vector2f(128 / 2 - 30, 128 / 2 - 5));
 
     context->draw(text_score);
-#else    
+#else
     GrContextForegroundSet(context, ClrWhite);
-    GrStringDraw(context, text.c_str(), (int32_t)text.size(), 30, 
-                (context->psFont->ui8Height+2)*6, true);
+    GrStringDraw(context, text.c_str(), (int32_t)text.size(), 30,
+        (context->psFont->ui8Height + 2) * 6, true);
 #endif
 }
 
 void ViewGame::draw_menu(DrawContext* context)
 {
     GrContextForegroundSet(context, ClrWhite);
-    GrStringDraw(context,"> New Game", -1, 0, 
-                (context->psFont->ui8Height+2)*5, true);
-    GrStringDraw(context,"Press Button", -1, 30, 
-                (context->psFont->ui8Height+2)*10, true);
+    GrStringDraw(context, "> New Game", -1, 0,
+        (context->psFont->ui8Height + 2) * 5, true);
+    GrStringDraw(context, "Press Button", -1, 30,
+        (context->psFont->ui8Height + 2) * 10, true);
 }
 
-
-void ViewGame::clean_screen(DrawContext* context){
+void ViewGame::clean_screen(DrawContext* context)
+{
     // context->clear(sf::Color::Black);
-    tRectangle screen{0, 0, globals::RESOLUTION_X, globals::RESOLUTION_Y};
+    tRectangle screen { 0, 0, globals::RESOLUTION_X, globals::RESOLUTION_Y };
     GrContextForegroundSet(context, ClrBlack);
     GrRectFill(context, &screen);
 }

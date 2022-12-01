@@ -16,6 +16,6 @@
 #define _DRIVER_LCD_H_
 
 namespace drivers {
-    void setup_LCD(tContext* pContext);
+void setup_LCD(tContext* pContext);
 }
 #endif

@@ -2,7 +2,8 @@
 
 using namespace drivers;
 
-void drivers::setup_all(tContext* pContext){
+void drivers::setup_all(tContext* pContext)
+{
     setup_button();
     setup_buzzer();
     setup_joystick();

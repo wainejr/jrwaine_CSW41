@@ -5,18 +5,18 @@
 //
 //*****************************************************************************
 
-#include <stdbool.h>
-#include <stdint.h>
-#include "inc/hw_memmap.h"
-#include "inc/hw_ssi.h"
-#include "inc/hw_types.h"
-#include "inc/hw_sysctl.h"
 #include "driverlib/gpio.h"
+#include "driverlib/pin_map.h"
+#include "driverlib/rom.h"
 #include "driverlib/ssi.h"
 #include "driverlib/sysctl.h"
-#include "driverlib/rom.h"
-#include "driverlib/pin_map.h"
 #include "grlib/grlib.h"
+#include "inc/hw_memmap.h"
+#include "inc/hw_ssi.h"
+#include "inc/hw_sysctl.h"
+#include "inc/hw_types.h"
+#include <stdbool.h>
+#include <stdint.h>
 
 #ifndef __CFAF128X128X16_H__
 #define __CFAF128X128X16_H__
@@ -29,7 +29,7 @@
 extern void cfaf128x128x16Init(void);
 extern const tDisplay g_sCfaf128x128x16;
 
-//Colors
+// Colors
 extern const uint16_t blackColor;
 extern const uint16_t whiteColor;
 extern const uint16_t redColor;

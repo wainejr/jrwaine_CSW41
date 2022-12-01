@@ -1,6 +1,6 @@
 #include "../models/PacMan.h"
-#include "Base.h"
 #include "Agent.h"
+#include "Base.h"
 
 #ifndef _VIEW_PACMAN_H_
 #define _VIEW_PACMAN_H_

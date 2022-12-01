@@ -10,15 +10,15 @@
  *
  */
 
+#include "LCD.h"
 #include "button.h"
 #include "buzzer.h"
 #include "joystick.h"
-#include "LCD.h"
 
 #ifndef _DRIVER_ALL_H_
 #define _DRIVER_ALL_H_
 
 namespace drivers {
-    void setup_all(tContext* pContext);
+void setup_all(tContext* pContext);
 }
 #endif

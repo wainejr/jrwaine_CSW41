@@ -10,15 +10,15 @@
  *
  */
 
-#include <stdbool.h>
-#include <stdint.h>
 #include "driverlib/adc.h"
 #include "driverlib/gpio.h"
+#include "driverlib/interrupt.h"
 #include "driverlib/pin_map.h"
 #include "driverlib/sysctl.h"
-#include "driverlib/interrupt.h"
 #include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
+#include <stdbool.h>
+#include <stdint.h>
 
 #include "../misc/Vector.h"
 
@@ -26,11 +26,11 @@
 #define _DRIVER_JOYSTICK_H_
 
 namespace drivers {
-    void setup_joystick();
+void setup_joystick();
 
-    int get_joystick_x();
-    int get_joystick_y();
+int get_joystick_x();
+int get_joystick_y();
 
-    misc::Vector<int> get_joystick_pos();
+misc::Vector<int> get_joystick_pos();
 }
 #endif

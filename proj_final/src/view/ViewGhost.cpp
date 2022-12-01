@@ -3,8 +3,8 @@
 using namespace view;
 
 ViewGhost::ViewGhost(models::Ghost* ghost)
-    : ViewAgent(ghost),
-    ghost(ghost)
+    : ViewAgent(ghost)
+    , ghost(ghost)
 {
 }
 
@@ -19,16 +19,16 @@ void ViewGhost::draw(DrawContext* context)
     } else {
         switch (this->ghost->color) {
         case models::GhostColors::BLUE:
-        color = ClrCyan;
+            color = ClrCyan;
             break;
         case models::GhostColors::RED:
-        color = ClrRed;
+            color = ClrRed;
             break;
         case models::GhostColors::PINK:
-        color = ClrPink;
+            color = ClrPink;
             break;
         case models::GhostColors::ORANGE:
-        color = ClrOrange;
+            color = ClrOrange;
             break;
         default:
             break;

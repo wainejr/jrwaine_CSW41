@@ -1,6 +1,6 @@
 #include "../models/Ghost.h"
-#include "Base.h"
 #include "Agent.h"
+#include "Base.h"
 
 #ifndef _VIEW_GHOST_H_
 #define _VIEW_GHOST_H_
