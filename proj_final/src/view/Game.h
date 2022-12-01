@@ -17,8 +17,8 @@ public:
     models::Game* game;
     ViewGamePlay view_gameplay;
 
+    void clean_screen(DrawContext* context);
     void draw(DrawContext* context);
-    void update_view_gameplay();
 };
 }
 #endif

@@ -2966,9 +2966,36 @@
         </group>
         <group>
             <name>threads</name>
+            <file>
+                <name>$PROJ_DIR$\src\threads\actions.cpp</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\threads\actions.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\threads\control_ghost.cpp</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\threads\control_ghost.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\threads\display.cpp</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\threads\display.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\threads\update_state.cpp</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\threads\update_state.h</name>
+            </file>
         </group>
         <group>
             <name>view</name>
+            <file>
+                <name>$PROJ_DIR$\src\view\Agent.h</name>
+            </file>
             <file>
                 <name>$PROJ_DIR$\src\view\Base.h</name>
             </file>
@@ -2989,6 +3016,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\src\view\PacMan.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\view\ViewAgent.cpp</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\src\view\ViewGame.cpp</name>

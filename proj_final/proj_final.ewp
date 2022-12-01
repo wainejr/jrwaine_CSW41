@@ -291,7 +291,7 @@
                 <option>
                     <name>CCAllowList</name>
                     <version>1</version>
-                    <state>00000000</state>
+                    <state>10010100</state>
                 </option>
                 <option>
                     <name>CCDebugInfo</name>
@@ -371,7 +371,7 @@
                 </option>
                 <option>
                     <name>CCOptLevel</name>
-                    <state>1</state>
+                    <state>2</state>
                 </option>
                 <option>
                     <name>CCOptStrategy</name>
@@ -380,7 +380,7 @@
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
-                    <state>1</state>
+                    <state>2</state>
                 </option>
                 <option>
                     <name>CCPosIndRopi</name>
@@ -2280,9 +2280,36 @@
         </group>
         <group>
             <name>threads</name>
+            <file>
+                <name>$PROJ_DIR$\src\threads\actions.cpp</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\threads\actions.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\threads\control_ghost.cpp</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\threads\control_ghost.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\threads\display.cpp</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\threads\display.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\threads\update_state.cpp</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\threads\update_state.h</name>
+            </file>
         </group>
         <group>
             <name>view</name>
+            <file>
+                <name>$PROJ_DIR$\src\view\Agent.h</name>
+            </file>
             <file>
                 <name>$PROJ_DIR$\src\view\Base.h</name>
             </file>
@@ -2303,6 +2330,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\src\view\PacMan.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\view\ViewAgent.cpp</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\src\view\ViewGame.cpp</name>

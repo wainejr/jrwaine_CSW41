@@ -55,7 +55,7 @@ namespace consts {
         { W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W },
     };
 
-    // Update state every 10 ms,
+    // Update state every 20 ms,
     const float STATE_UPDATE_SEC_INTERVAL = 0.020f;
 
     const int SMALL_BALL_SCORE = 10;
@@ -90,8 +90,8 @@ namespace consts {
     const int GHOST_PINK_FREE_CAVE_N_UPDATES = GHOST_PINK_FREE_CAVE_SEC / STATE_UPDATE_SEC_INTERVAL;
 
     // 0.6 seconds to pass a tile for each second
-    const float PACMAN_VELOCITY_PER_SEC = 4.0f;
-    const float GHOSTS_VELOCITY_PER_SEC = 4.0f;
+    const float PACMAN_VELOCITY_PER_SEC = 2.0f;
+    const float GHOSTS_VELOCITY_PER_SEC = 3.0f;
 
     const float RIGHT[2] = { 1.0f, 0.0f };
     const float LEFT[2] = { -1.0f, 0.0f };

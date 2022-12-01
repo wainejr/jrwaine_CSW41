@@ -139,9 +139,10 @@ void control_locked_cave(models::GhostControl* ghost_control)
     }
 }
 
+#if USE_SFML
 void control_ghost_loop(models::GamePlay* gameplay, models::Ghost* ghost, int random_seed)
-{
-    // Initialize random seed
+{  
+  // Initialize random seed
     srand(random_seed);
     models::GhostControl ghost_control(models::CONTROL_RANDOM, gameplay, ghost);
 
@@ -170,3 +171,57 @@ void control_ghost_loop(models::GamePlay* gameplay, models::Ghost* ghost, int ra
             (int)(1000 * models::consts::STATE_UPDATE_SEC_INTERVAL)));
     }
 }
+#else
+void control_ghost_loop(ULONG ghost_idx)
+{
+    models::GamePlay* gameplay = &g_game.gameplay;
+    models::Ghost* ghost = &gameplay->ghosts[ghost_idx];
+
+    // Initialize random seed
+    models::GhostControl ghost_control(models::CONTROL_RANDOM, gameplay, ghost);
+
+    while(true){
+      srand(ghost_idx*50+tx_time_get());
+      while (gameplay->gamestate == models::GAME_STATE_RUNNING) {
+          update_ghost_tile(&ghost_control);
+          switch (ghost->state) {
+          case models::GhostState::IN_CAVE:
+              control_incave(&ghost_control);
+              break;
+          case models::GhostState::OUT_CAVE:
+              control_outcave(&ghost_control);
+              break;
+          case models::GhostState::WALKING:
+              control_walking(&ghost_control);
+              break;
+          case models::GhostState::AFRAID:
+              control_afraid(&ghost_control);
+              break;
+          case models::GhostState::LOCKED_CAVE:
+              control_locked_cave(&ghost_control);
+              break;
+          default:
+              break;
+          }
+          
+            tx_thread_sleep(THREAD_GHOST_PERIOD);
+      }
+      tx_thread_suspend(&g_thread_ghosts[ghost_idx]);
+    }
+}
+
+
+void    initialize_threads_control_ghosts(){
+    /* Memory pointer */
+    CHAR *pointer = (CHAR*)TX_NULL;
+
+    for(int i = 0; i < 4; i++){
+        /* Allocate the stack for display thread  */
+        tx_byte_allocate(&g_byte_pool, (VOID **) &pointer, STACK_SIZE, TX_NO_WAIT);
+        /* Create the thread for display  */
+        tx_thread_create(&g_thread_ghosts[i], "thread ghost", control_ghost_loop, i, pointer, 
+            STACK_SIZE, 0, 0, 1, TX_AUTO_START);
+    }
+}
+
+#endif

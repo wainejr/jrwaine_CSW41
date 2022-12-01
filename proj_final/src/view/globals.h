@@ -6,7 +6,7 @@
 
 namespace view {
 namespace globals {
-    const float DESIRED_FPS = 20;
+    const float DESIRED_FPS = 10;
     const int RESOLUTION_X = 128;
     const int RESOLUTION_Y = 128;
 

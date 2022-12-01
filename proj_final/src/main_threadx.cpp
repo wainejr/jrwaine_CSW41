@@ -23,6 +23,10 @@
 
 #include "drivers/all.h"
 #include "view/Game.h"
+#include "threads/display.h"
+#include "threads/update_state.h"
+#include "threads/actions.h"
+#include "threads/control_ghost.h"
 
 /*------------------------------------------------------------------------------
  *
@@ -30,21 +34,24 @@
  *
  *------------------------------------------------------------------------------*/
 
-#define STACK_SIZE         2048
-#define BYTE_POOL_SIZE     (STACK_SIZE*8)
-
 #define THREAD_PERIOD(period_sec)   (int)((period_sec)*TX_TIMER_TICKS_PER_SECOND)
 #define THREAD_DISPLAY_PERIOD       THREAD_PERIOD(1.0f/view::globals::DESIRED_FPS)
-#define THREAD_STATE_PERIOD         THREAD_PERIOD(1.0f/models::consts::STATE_UPDATE_SEC_INTERVAL)
 #define THREAD_AUDIO_PERIOD         (THREAD_DISPLAY_PERIOD*5)
-#define THREAD_GHOST_PERIOD         (THREAD_STATE_PERIOD*5)
 
 /* Define the ThreadX object control blocks...  */
 
-TX_THREAD               thread_display;
-TX_THREAD               thread_state;
 TX_THREAD               thread_input;
-TX_THREAD               thread_ghosts[4];
+TX_THREAD g_thread_display;
+TX_THREAD g_thread_state;
+TX_THREAD g_thread_actions;
+TX_THREAD g_thread_ghosts[4];
+
+TX_TIMER g_timer_display;
+TX_TIMER g_timer_state;
+TX_TIMER g_timer_actions;
+
+TX_BYTE_POOL g_byte_pool;
+
 
 TX_BYTE_POOL            byte_pool_0;
 TX_MUTEX                mutex_0;
@@ -57,9 +64,9 @@ TX_TIMER                timer_ghosts[4];
 
 UCHAR                   byte_pool_memory[BYTE_POOL_SIZE];
 
-tContext sContext;
-models::Game game;
-view::ViewGame view_game(&game);
+models::Game g_game;
+tContext g_context;
+view::ViewGame g_view_game(&g_game);
 
 
 /*------------------------------------------------------------------------------
@@ -115,42 +122,42 @@ void test_buzzer(){
 }
 
 void test_display(){
-    GrContextForegroundSet(&sContext, ClrWhite);
-    GrContextBackgroundSet(&sContext, ClrBlack);
+    GrContextForegroundSet(&g_context, ClrWhite);
+    GrContextBackgroundSet(&g_context, ClrBlack);
 
-    GrStringDraw(&sContext,"Exempleae", -1, 0, (sContext.psFont->ui8Height+2)*0, true);
-    GrStringDraw(&sContext,"Tiva + BoosterPack", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
-    GrStringDraw(&sContext,"---------------------", -1, 0, (sContext.psFont->ui8Height+2)*2, true);
+    GrStringDraw(&g_context,"Exempleae", -1, 0, (g_context.psFont->ui8Height+2)*0, true);
+    GrStringDraw(&g_context,"Tiva + BoosterPack", -1, 0, (g_context.psFont->ui8Height+2)*1, true);
+    GrStringDraw(&g_context,"---------------------", -1, 0, (g_context.psFont->ui8Height+2)*2, true);
     tRectangle rect{
       40, 40, 80, 80
     };
 
     // GrRectFill(&sContext, &rect, (unsigned long)greenColor);
-    GrContextForegroundSet(&sContext, ClrGreen);
-    GrRectFill(&sContext, &rect);
-    GrRectDraw(&sContext, &rect);
+    GrContextForegroundSet(&g_context, ClrGreen);
+    GrRectFill(&g_context, &rect);
+    GrRectDraw(&g_context, &rect);
     
     while(true){}
 }
 
 void test_menu_draw(){
-    game.into_menu();
-    view_game.draw(&sContext);
+    g_game.into_menu();
+    g_view_game.draw(&g_context);
     
     while(true){}
 }
 
 void test_game_draw(){
-    game.into_playing();
-    view_game.draw(&sContext);
+    g_game.into_playing();
+    g_view_game.draw(&g_context);
     
     while(true){}
 }
 
 void test_score_draw(){
-    game.into_showing_score();
-    game.gameplay.score.curr_score = 128.8f;
-    view_game.draw(&sContext);
+    g_game.into_showing_score();
+    g_game.gameplay.score.curr_score = 128.8f;
+    g_view_game.draw(&g_context);
     
     while(true){}
 }
@@ -161,7 +168,9 @@ int main()
 {
     /* Sets the system clock to 120 MHz. */
     uint32_t ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_240), 120000000);
-    drivers::setup_all(&sContext);
+    drivers::setup_all(&g_context);
+    
+    g_view_game.clean_screen(&g_context);
 
     // test_game_draw();
 
@@ -177,145 +186,13 @@ void    tx_application_define(void *first_unused_memory)
     CHAR *pointer = (CHAR*)TX_NULL;
 
     /* Create a byte memory pool from which to allocate the thread stacks.  */
-    tx_byte_pool_create(&byte_pool_0, "byte pool 0", byte_pool_memory, BYTE_POOL_SIZE);
+    tx_byte_pool_create(&g_byte_pool, "global byte pool", byte_pool_memory, BYTE_POOL_SIZE);
 
-    /* Allocate the stack for thread 1.  */
-    tx_byte_allocate(&byte_pool_0, (VOID **) &pointer, STACK_SIZE, TX_NO_WAIT);
+    initialize_thread_update_state();
+    initialize_thread_display();
+    initialize_thread_actions();
+    initialize_threads_control_ghosts();
 
-    /* Create the thread 1.  */
-    tx_thread_create(&thread_1, "thread 1", thread_1_m_entry, THREAD_1_INPUT, pointer, STACK_SIZE, 0, 0, TX_NO_TIME_SLICE, TX_AUTO_START);
-    
-    /* Allocate the stack for thread 2.  */
-    tx_byte_allocate(&byte_pool_0, (VOID **) &pointer, STACK_SIZE, TX_NO_WAIT);
-
-    /* Create the thread 2.  */
-    tx_thread_create(&thread_2, "thread 2", thread_2_entry, THREAD_2_INPUT, pointer, STACK_SIZE, 15, 15, TX_NO_TIME_SLICE, TX_AUTO_START);
-    
-    /* Allocate the stack for thread 3.  */
-    tx_byte_allocate(&byte_pool_0, (VOID **) &pointer, STACK_SIZE, TX_NO_WAIT);
-
-    /* Create the thread 3.  */
-    tx_thread_create(&thread_3, "thread 3", thread_3_m_entry, THREAD_3_INPUT, pointer, STACK_SIZE, 25, 25, TX_NO_TIME_SLICE, TX_AUTO_START);
-    
-    /* Create the mutex used by thread 1 and 3 with priority inheritance. */
-    tx_mutex_create(&mutex_0, "mutex 0", TX_INHERIT);
-
-    /* Create the timer 1. */
-    tx_timer_create(
-                    &timer_1, "timer 1", timer_expiration_1, 1, 
-                    TX_TIMER_TICKS_PER_SECOND * 1, TX_TIMER_TICKS_PER_SECOND * 1, TX_AUTO_ACTIVATE);    
- 
     /* Set internal system clock to zero */
     tx_time_set(0x0);
-}
-
-/* Define the thread 1.  */
-
-void    thread_1_entry(ULONG reload)
-{
-    /* Stores previous and current system time value */
-    ULONG previous, current;
-    
-    /* Stores the iterator value */
-    volatile ULONG iterations = reload;
-    
-    /* Loop forever */
-    while(1)
-    {   
-        /* Takes the time at the start of the job */
-        previous = tx_time_get();
-        
-        /* Each cycle takes about 58 clocks */
-        while(iterations)
-        {
-            /* Turn on Led 1 */
-            GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
-            
-            /* Turn off Leds 1, 2 and 3  */
-            GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1 | GPIO_PIN_0, 0x0);
-            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
-            
-            /* Pickup the current system time */
-            current = tx_time_get();
-            
-            /* If only one tick has passed, decrement the iterations, if not, just update the previous value */
-            if((previous + 1) == current)
-            {
-                previous = current;
-                iterations--;
-            }
-            else if(previous != current)
-            {
-                previous = current;
-            }
-        }
-        
-         /* Reload the execution cycles */
-        iterations = reload;
-        
-        /* Suspend thread 1 */
-        tx_thread_suspend(&thread_1);
-    }
-}
-
-
-void    thread_1_m_entry(ULONG reload)
-{
-    /* Stores previous and current system time value */
-    ULONG previous, current;
-    
-    /* Stores the iterator value */
-    volatile ULONG iterations = reload;
-    
-    /* Loop forever */
-    while(1)
-    {   
-        /* Takes the time at the start of the job */
-        previous = tx_time_get();
-        
-        /* Get Mutex */
-        tx_mutex_get(&mutex_0, TX_WAIT_FOREVER);
-
-        /* Each cycle takes about 58 clocks */
-        while(iterations)
-        {
-            /* Turn on Led 1 */
-            GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
-            
-            /* Turn off Leds 1, 2 and 3  */
-            GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1 | GPIO_PIN_0, 0x0);
-            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x0);
-            
-            /* Pickup the current system time */
-            current = tx_time_get();
-            
-            /* If only one tick has passed, decrement the iterations, if not, just update the previous value */
-            if((previous + 1) == current)
-            {
-                previous = current;
-                iterations--;
-            }
-            else if(previous != current)
-            {
-                previous = current;
-            }
-        }
-        
-         /* Reload the execution cycles */
-        iterations = reload;
-        
-        /* Put Mutex */
-        tx_mutex_put(&mutex_0);
-        
-        /* Suspend thread 1 */
-        tx_thread_suspend(&thread_1);
-    }
-}
-
-
-/* Resume thread 1 */
-
-void    timer_expiration_1(ULONG expiration_input)
-{
-    tx_thread_resume(&thread_1); 
 }
