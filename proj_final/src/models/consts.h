@@ -60,8 +60,9 @@ namespace consts {
 
     const int SMALL_BALL_SCORE = 10;
     const int SUPER_BALL_SCORE = 50;
-    const int GHOST_AFRAID_SCORE = 200;
-    const float SCORE_MUL_DECREASE_PER_SEC = 0.01f;
+    const int GHOST_AFRAID_SCORE = 100;
+    // Minimun mul in 180 seconds ((1-0.1)/0.005=900/5=180)
+    const float SCORE_MUL_DECREASE_PER_SEC = 0.005f;
     const float SCORE_MIN_MUL = 0.1f;
     const float SCORE_MUL_DECREASE_PER_UPDATE = SCORE_MUL_DECREASE_PER_SEC * STATE_UPDATE_SEC_INTERVAL;
 
