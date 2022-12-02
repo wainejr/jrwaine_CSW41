@@ -12,12 +12,6 @@ GhostControl::GhostControl(GhostControlType control_type, GamePlay* gameplay, Gh
     this->last_tile = ghost->get_agent_tile();
     this->curr_tile = this->last_tile;
     this->last_tile_dir_updated = misc::Vector<int>(0, 0);
-
-    this->curr_path_pos = 0;
-    this->path_size = 0;
-    for (int i = 0; i < 100; i++) {
-        this->path_follow[i] = misc::Vector<int>(0, 0);
-    }
 }
 
 void GhostControl::update_direction(misc::Vector<int> new_direction)
