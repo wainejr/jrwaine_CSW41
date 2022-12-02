@@ -14,17 +14,6 @@ void ViewAgent::draw_agent(DrawContext* context, unsigned long color)
     float center_pos_y = this->agent->pos.y + 0.5f;
     globals::get_normalized_pos(center_pos_x, center_pos_y, &abs_pos_x, &abs_pos_y);
 
-#if USE_SFML
-    abs_pos_x = abs_pos_x - globals::PACMAN_RADIUS;
-    abs_pos_y = abs_pos_y - globals::PACMAN_RADIUS;
-
-    sf::CircleShape pac(globals::PACMAN_RADIUS);
-
-    pac.setPosition(sf::Vector2f(abs_pos_x, abs_pos_y));
-    pac.setFillColor(sf::Color(255, 255, 0));
-
-    window->draw(pac);
-#else
     GrContextForegroundSet(context, ClrBlack);
     tRectangle black_background { (int16_t)(floor(abs_pos_x - globals::TILE_SIZE / 2)),
         (int16_t)(floor(abs_pos_y - globals::TILE_SIZE / 2)),
@@ -45,5 +34,4 @@ void ViewAgent::draw_agent(DrawContext* context, unsigned long color)
 
     GrContextForegroundSet(context, color);
     GrCircleFill(context, (int32_t)abs_pos_x, (int32_t)abs_pos_y, (int32_t)globals::PACMAN_RADIUS);
-#endif
 }

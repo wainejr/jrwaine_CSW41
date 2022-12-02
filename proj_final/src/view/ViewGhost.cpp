@@ -14,7 +14,7 @@ void ViewGhost::draw(DrawContext* context)
 
     if (this->ghost->state == models::GhostState::AFRAID) {
         color = ClrBlue;
-    } else if (this->ghost->state == models::GhostState::IN_CAVE) {
+    } else if (this->ghost->state == models::GhostState::EATEN) {
         color = ClrWhiteSmoke;
     } else {
         switch (this->ghost->color) {

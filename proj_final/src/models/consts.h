@@ -58,14 +58,17 @@ namespace consts {
     // Update state every 20 ms,
     const float STATE_UPDATE_SEC_INTERVAL = 0.020f;
 
+    // Scores
     const int SMALL_BALL_SCORE = 10;
     const int SUPER_BALL_SCORE = 50;
     const int GHOST_AFRAID_SCORE = 100;
+    
+    const float SCORE_MIN_MUL = 0.1f;
     // Minimun mul in 180 seconds ((1-0.1)/0.005=900/5=180)
     const float SCORE_MUL_DECREASE_PER_SEC = 0.005f;
-    const float SCORE_MIN_MUL = 0.1f;
     const float SCORE_MUL_DECREASE_PER_UPDATE = SCORE_MUL_DECREASE_PER_SEC * STATE_UPDATE_SEC_INTERVAL;
 
+    // Time pacman stays in super mode
     const float TIME_SEC_SUPER_PACMAN = 10;
     const int N_UPDATES_SUPER_PACMAN = (int)(TIME_SEC_SUPER_PACMAN / STATE_UPDATE_SEC_INTERVAL);
 
@@ -78,22 +81,25 @@ namespace consts {
     const float INITIAL_GHOST_PINK_POSITION[2] = { 13.5f, 14.0f };
     const float INITIAL_GHOST_BLUE_POSITION[2] = { 11.5f, 14.0f };
 
+    // Some specific tiles
     const int GHOST_RESET_INCAVE_POSITION[2] = { 13, 14 };
     const int LAB_LEFT_TUNNEL[2] = { 13, 12 };
     const int LAB_RIGHT_TUNNEL[2] = { 14, 12 };
 
-    const float GHOST_ORANGE_FREE_CAVE_SEC = 5.0f;
-    const float GHOST_BLUE_FREE_CAVE_SEC = 3.5f;
+    // Time to free ghosts from cave
+    const float GHOST_ORANGE_FREE_CAVE_SEC = 6.0f;
+    const float GHOST_BLUE_FREE_CAVE_SEC = 4.0f;
     const float GHOST_PINK_FREE_CAVE_SEC = 2.0f;
 
     const int GHOST_ORANGE_FREE_CAVE_N_UPDATES = GHOST_ORANGE_FREE_CAVE_SEC / STATE_UPDATE_SEC_INTERVAL;
     const int GHOST_BLUE_FREE_CAVE_N_UPDATES = GHOST_BLUE_FREE_CAVE_SEC / STATE_UPDATE_SEC_INTERVAL;
     const int GHOST_PINK_FREE_CAVE_N_UPDATES = GHOST_PINK_FREE_CAVE_SEC / STATE_UPDATE_SEC_INTERVAL;
 
-    // 0.6 seconds to pass a tile for each second
+    // Tiles per second for agents
     const float PACMAN_VELOCITY_PER_SEC = 2.0f;
-    const float GHOSTS_VELOCITY_PER_SEC = 3.0f;
+    const float GHOSTS_VELOCITY_PER_SEC = 2.5f;
 
+    // General directions to use
     const float RIGHT[2] = { 1.0f, 0.0f };
     const float LEFT[2] = { -1.0f, 0.0f };
     // Y axis is invertex actually

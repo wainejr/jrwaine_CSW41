@@ -58,7 +58,7 @@ void Ghost::tick_update()
 void Ghost::into_afraid()
 {
     // Only goes into afraid if it's walking or in cave
-    if (this->state == GhostState::WALKING || this->state == GhostState::IN_CAVE) {
+    if (this->state == GhostState::WALKING || this->state == GhostState::EATEN) {
         this->n_updates_state = 0;
         this->state = GhostState::AFRAID;
     }
@@ -70,10 +70,10 @@ void Ghost::into_walking()
     this->state = GhostState::WALKING;
 }
 
-void Ghost::into_incave()
+void Ghost::into_eaten()
 {
     this->n_updates_state = 0;
-    this->state = GhostState::IN_CAVE;
+    this->state = GhostState::EATEN;
     this->vel = consts::GHOSTS_VELOCITY_PER_SEC * 2;
 }
 

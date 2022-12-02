@@ -15,17 +15,16 @@
 #define _MODELS_GHOSTS_H_
 namespace models {
 
-namespace GhostColors {
     /**
      *   @brief Colors of ghosts
      */
+namespace GhostColors {
     enum myEnum { RED,
         ORANGE,
         PINK,
         BLUE };
 }
 
-namespace GhostState {
     /**
      *   @brief State of ghosts
      *       OUT_CAVE: ghost is coming out of cave
@@ -33,10 +32,11 @@ namespace GhostState {
      *       AFRAID: ghost was eaten by PacMan and is going back to cave
      *
      */
+namespace GhostState {
     enum myEnum { OUT_CAVE,
         WALKING,
         AFRAID,
-        IN_CAVE,
+        EATEN,
         LOCKED_CAVE,
     };
 }
@@ -56,13 +56,45 @@ public:
     Ghost();
     Ghost(GhostColors::myEnum color);
 
+    // Number of updates in current state
     int n_updates_state;
+
+    /**
+    *   @brief Tick update for ghost current state
+    *   
+    */
     void tick_update();
 
+    /**
+    *   @brief Ghost into AFRAID state
+    *   
+    */
     void into_afraid();
+    
+    /**
+    *   @brief Ghost into WALKING state
+    *   
+    */
     void into_walking();
-    void into_incave();
+    
+    /**
+    *   @brief Ghost into EATEN state
+    *   
+    */
+    void into_eaten();
+    
+    /**
+    *   @brief Ghost into OUT_CAVE state
+    *   
+    */
     void into_outcave();
+    
+    /**
+    *   @brief Is ghost free from cave lock
+    *   
+    *   @return true ghost is free
+    *   @return false ghost is not free
+    */
     bool is_free_from_cave_lock();
 };
 } // namespace models

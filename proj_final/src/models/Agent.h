@@ -37,6 +37,11 @@ public:
      */
     void update_position(float vel_factor);
 
+    /**
+    *   @brief Get the agent current tile in labirynth 
+    *   
+    *   @return misc::Vector<int> agent current tile
+    */
     misc::Vector<int> get_agent_tile();
 };
 } // namespace models

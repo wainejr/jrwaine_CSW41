@@ -12,6 +12,11 @@
 #ifndef _MODELS_SCORE_H_
 #define _MODELS_SCORE_H_
 namespace models {
+
+/**
+*   @brief Game current score
+*   
+*/
 class Score {
 public:
     float curr_score;

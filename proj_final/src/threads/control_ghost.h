@@ -2,15 +2,8 @@
 #include "../models/Game.h"
 #include "../models/GhostControl.h"
 
-#if USE_SFML
-#include <chrono>
-#include <stdlib.h>
-#include <thread>
-#include <time.h>
-#include <vector>
-
-void control_ghost_loop(models::GamePlay* gameplay, models::Ghost* ghost, int random_seed);
-#else
+#ifndef _THREADS_CONTROL_GHOST_H_
+#define _THREADS_CONTROL_GHOST_H_
 
 #define THREAD_GHOST_PERIOD THREAD_PERIOD(5 * models::consts::STATE_UPDATE_SEC_INTERVAL)
 

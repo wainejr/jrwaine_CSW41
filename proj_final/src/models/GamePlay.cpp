@@ -23,7 +23,7 @@ GamePlay::GamePlay()
     this->ghosts[3] = Ghost(GhostColors::PINK);
 
     this->lab = Labyrinth();
-    this->gamestate = GAME_STATE_RUNNING;
+    this->gamestate = GAMEPLAY_STATE_RUNNING;
 
     this->score = Score();
     this->is_init = false;
@@ -158,7 +158,7 @@ void GamePlay::update_ghost_state(Ghost* ghost)
             ghost->into_walking();
         }
         break;
-    case GhostState::IN_CAVE:
+    case GhostState::EATEN:
         if (pac.state == PacmanState::NORMAL) {
             if (this->lab.is_incave(ghost_tile.x, ghost_tile.y)) {
                 ghost->into_outcave();
@@ -224,17 +224,17 @@ UpdateStatus::myEnum GamePlay::update_gameplay_status()
         // In case of collision, check ghost state
         switch (this->ghosts[i].state) {
         case GhostState::AFRAID:
-            this->ghosts[i].into_incave();
+            this->ghosts[i].into_eaten();
             this->score.curr_score += consts::GHOST_AFRAID_SCORE * this->score.multiplier;
             break;
-        case GhostState::IN_CAVE:
+        case GhostState::EATEN:
             // Nothing happens, pacman is super and ghost is back to cave
             break;
         case GhostState::WALKING:
-            this->gamestate = GameState::GAME_STATE_ENDED;
+            this->gamestate = GamePlayState::GAMEPLAY_STATE_ENDED;
             return UpdateStatus::PACMAN_DIED;
         case GhostState::OUT_CAVE:
-            this->gamestate = GameState::GAME_STATE_ENDED;
+            this->gamestate = GamePlayState::GAMEPLAY_STATE_ENDED;
             return UpdateStatus::PACMAN_DIED;
         default:
             break;
@@ -242,7 +242,7 @@ UpdateStatus::myEnum GamePlay::update_gameplay_status()
     }
 
     if (this->lab.n_balls == 0) {
-        this->gamestate = GameState::GAME_STATE_ENDED;
+        this->gamestate = GamePlayState::GAMEPLAY_STATE_ENDED;
         return UpdateStatus::GAME_FINISHED;
     }
     return UpdateStatus::GAME_CONTINUE;

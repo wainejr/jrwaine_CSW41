@@ -14,18 +14,10 @@ void ViewGame::draw_score(DrawContext* context)
     std::string text = "Score: ";
     text += std::to_string(score);
 
-#if USE_SFML
-    sf::Text text_score;
 
-    text_score.setString(str_score);
-    text_score.setPosition(sf::Vector2f(128 / 2 - 30, 128 / 2 - 5));
-
-    context->draw(text_score);
-#else
     GrContextForegroundSet(context, ClrWhite);
     GrStringDraw(context, text.c_str(), (int32_t)text.size(), 30,
         (context->psFont->ui8Height + 2) * 6, true);
-#endif
 }
 
 void ViewGame::draw_menu(DrawContext* context)

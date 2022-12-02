@@ -16,22 +16,45 @@
 #define _MODELS_GAME_H_
 namespace models {
 
+/**
+*   @brief Global states for game
+*   
+*/
 enum GlobalStates {
     MENU,
     PLAYING,
     SHOWING_SCORE,
 };
 
+/**
+*   @brief Game representation, with states and entities required for it
+*   
+*/
 class Game {
 
 public:
+    // Current game state
     GlobalStates curr_state;
+    // Gameplay representation
     GamePlay gameplay;
     Game();
 
+    /**
+    *   @brief State into playing
+    *   
+    */
     void into_playing();
+    
+    /**
+    *   @brief State into showing score
+    *   
+    */
     void into_showing_score();
-    void into_menu();
+
+    /**
+    *   @brief State into menu
+    *   
+    */void into_menu();
 };
 }
 #endif

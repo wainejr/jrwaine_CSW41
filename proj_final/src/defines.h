@@ -6,6 +6,4 @@
 // Mock resources to run on PC
 #define IS_MOCK true
 
-#define USE_SFML false
-
 #define THREAD_PERIOD(period_sec) (int)((period_sec)*TX_TIMER_TICKS_PER_SECOND)

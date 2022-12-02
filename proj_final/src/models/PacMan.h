@@ -15,13 +15,13 @@
 #define _MODELS_PACMAN_H_
 namespace models {
 
+/**
+*   @brief State of PacMan
+*       NORMAL: Normal state of pacman
+*       SUPER: PacMan is capable of eating ghosts
+*
+*/
 namespace PacmanState {
-    /**
-     *   @brief State of PacMan
-     *       NORMAL: Normal state of pacman
-     *       SUPER: PacMan is capable of eating ghosts
-     *
-     */
     enum myEnum { NORMAL,
         SUPER,
         DEAD,
@@ -40,7 +40,16 @@ public:
     PacmanState::myEnum state;
     PacMan();
 
+    /**
+    *   @brief Tick update in current pacman state
+    *   
+    */
     void tick_update();
+
+    /**
+    *   @brief Pacman into SUPER state
+    *   
+    */
     void into_super();
 };
 } // namespace models

@@ -38,8 +38,10 @@ void update_ghost_tile(models::GhostControl* ghost_control)
     }
 }
 
-void control_incave(models::GhostControl* ghost_control)
+void control_eaten(models::GhostControl* ghost_control)
 {
+    // Eaten stay still
+    ghost_control->gameplay->update_ghost_direction(ghost_control->ghost, misc::Vector<float>(0.0f, 0.0f));
 }
 
 void control_outcave(models::GhostControl* ghost_control)
@@ -139,39 +141,6 @@ void control_locked_cave(models::GhostControl* ghost_control)
     }
 }
 
-#if USE_SFML
-void control_ghost_loop(models::GamePlay* gameplay, models::Ghost* ghost, int random_seed)
-{
-    // Initialize random seed
-    srand(random_seed);
-    models::GhostControl ghost_control(models::CONTROL_RANDOM, gameplay, ghost);
-
-    while (gameplay->gamestate == models::GAME_STATE_RUNNING) {
-        update_ghost_tile(&ghost_control);
-        switch (ghost->state) {
-        case models::GhostState::IN_CAVE:
-            control_incave(&ghost_control);
-            break;
-        case models::GhostState::OUT_CAVE:
-            control_outcave(&ghost_control);
-            break;
-        case models::GhostState::WALKING:
-            control_walking(&ghost_control);
-            break;
-        case models::GhostState::AFRAID:
-            control_afraid(&ghost_control);
-            break;
-        case models::GhostState::LOCKED_CAVE:
-            control_locked_cave(&ghost_control);
-            break;
-        default:
-            break;
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(
-            (int)(1000 * models::consts::STATE_UPDATE_SEC_INTERVAL)));
-    }
-}
-#else
 void control_ghost_loop(ULONG ghost_idx)
 {
     models::GamePlay* gameplay = &g_game.gameplay;
@@ -182,11 +151,11 @@ void control_ghost_loop(ULONG ghost_idx)
 
     while (true) {
         srand(ghost_idx * 50 + tx_time_get());
-        while (gameplay->gamestate == models::GAME_STATE_RUNNING) {
+        while (gameplay->gamestate == models::GAMEPLAY_STATE_RUNNING) {
             update_ghost_tile(&ghost_control);
             switch (ghost->state) {
-            case models::GhostState::IN_CAVE:
-                control_incave(&ghost_control);
+            case models::GhostState::EATEN:
+                control_eaten(&ghost_control);
                 break;
             case models::GhostState::OUT_CAVE:
                 control_outcave(&ghost_control);
@@ -223,5 +192,3 @@ void initialize_threads_control_ghosts()
             STACK_SIZE, 0, 0, 1, TX_AUTO_START);
     }
 }
-
-#endif
