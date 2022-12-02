@@ -12,15 +12,15 @@
  *      File includes
  *
  *------------------------------------------------------------------------------*/
+#include "stdbool.h"
+#include "stdint.h"
+
 #include "driverlib/gpio.h"
 #include "driverlib/sysctl.h"
 #include "grlib/grlib.h"
 #include "inc/hw_memmap.h"
-#include "stdbool.h"
-#include "stdint.h"
 #include "stdio.h"
 #include "tx_api.h"
-
 #include "drivers/all.h"
 #include "threads/actions.h"
 #include "threads/control_ghost.h"

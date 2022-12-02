@@ -5,6 +5,9 @@
 //
 //*****************************************************************************
 
+#include <stdbool.h>
+#include <stdint.h>
+
 #include "driverlib/gpio.h"
 #include "driverlib/pin_map.h"
 #include "driverlib/rom.h"
@@ -15,8 +18,6 @@
 #include "inc/hw_ssi.h"
 #include "inc/hw_sysctl.h"
 #include "inc/hw_types.h"
-#include <stdbool.h>
-#include <stdint.h>
 
 #ifndef __CFAF128X128X16_H__
 #define __CFAF128X128X16_H__

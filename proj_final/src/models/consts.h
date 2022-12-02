@@ -61,7 +61,7 @@ namespace consts {
     const int SMALL_BALL_SCORE = 10;
     const int SUPER_BALL_SCORE = 50;
     const int GHOST_AFRAID_SCORE = 200;
-    const float SCORE_MUL_DECREASE_PER_SEC = 0.05f;
+    const float SCORE_MUL_DECREASE_PER_SEC = 0.01f;
     const float SCORE_MIN_MUL = 0.1f;
     const float SCORE_MUL_DECREASE_PER_UPDATE = SCORE_MUL_DECREASE_PER_SEC * STATE_UPDATE_SEC_INTERVAL;
 

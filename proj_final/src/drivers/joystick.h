@@ -10,6 +10,9 @@
  *
  */
 
+#include <stdbool.h>
+#include <stdint.h>
+
 #include "driverlib/adc.h"
 #include "driverlib/gpio.h"
 #include "driverlib/interrupt.h"
@@ -17,8 +20,6 @@
 #include "driverlib/sysctl.h"
 #include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
-#include <stdbool.h>
-#include <stdint.h>
 
 #include "../misc/Vector.h"
 
