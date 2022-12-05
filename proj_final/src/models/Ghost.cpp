@@ -62,19 +62,21 @@ void Ghost::into_afraid()
         this->n_updates_state = 0;
         this->state = GhostState::AFRAID;
     }
+    this->vel = consts::GHOSTS_VELOCITY_PER_SEC * 1.4;
 }
 
 void Ghost::into_walking()
 {
     this->n_updates_state = 0;
     this->state = GhostState::WALKING;
+    this->vel = consts::GHOSTS_VELOCITY_PER_SEC;
 }
 
 void Ghost::into_eaten()
 {
     this->n_updates_state = 0;
     this->state = GhostState::EATEN;
-    this->vel = consts::GHOSTS_VELOCITY_PER_SEC * 2;
+    this->vel = consts::GHOSTS_VELOCITY_PER_SEC;
 }
 
 void Ghost::into_outcave()

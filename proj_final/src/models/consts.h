@@ -63,9 +63,9 @@ namespace consts {
     const int SUPER_BALL_SCORE = 50;
     const int GHOST_AFRAID_SCORE = 100;
     
-    const float SCORE_MIN_MUL = 0.1f;
-    // Minimun mul in 180 seconds ((1-0.1)/0.005=900/5=180)
-    const float SCORE_MUL_DECREASE_PER_SEC = 0.005f;
+    const float SCORE_MIN_MUL = 0.5f;
+    // Minimun mul in 180 seconds
+    const float SCORE_MUL_DECREASE_PER_SEC = (1.0f-SCORE_MIN_MUL) / 180.0f;
     const float SCORE_MUL_DECREASE_PER_UPDATE = SCORE_MUL_DECREASE_PER_SEC * STATE_UPDATE_SEC_INTERVAL;
 
     // Time pacman stays in super mode
