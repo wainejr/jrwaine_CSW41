@@ -4,6 +4,8 @@ Source code for project PacMan for embedded systems.
 
 ## Folder structure
 
+It's important to notice that documentation and comments are mostly in `.h` files
+
 ### Models
 
 Contains all models that will be used for the project, under namespace `models`.

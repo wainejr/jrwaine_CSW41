@@ -6,12 +6,21 @@
 #define _VIEW_PACMAN_H_
 
 namespace view {
+/**
+*   @brief View of PacMan model
+*   
+*/
 class ViewPacMan : public Base, ViewAgent {
 public:
     ViewPacMan(models::PacMan* pac);
 
     models::PacMan* pac;
-    void draw(DrawContext* window);
+    /**
+    *   @brief Draw pacman current state
+    *   
+    *   @param context context to draw to
+    */
+    void draw(DrawContext* context);
 };
 }
 #endif

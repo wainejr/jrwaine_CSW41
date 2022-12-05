@@ -8,10 +8,19 @@
 #define _VIEW_GAMEPLAY_H_
 
 namespace view {
+/**
+*   @brief View for models gameplay class
+*   
+*/
 class ViewGamePlay : public Base {
 public:
     ViewGamePlay(models::GamePlay* gameplay);
 
+    /**
+    *   @brief Draw gameplay current state
+    *   
+    *   @param context context to draw to
+    */
     void draw(DrawContext* context);
     models::GamePlay* gameplay;
 
