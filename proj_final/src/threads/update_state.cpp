@@ -46,6 +46,8 @@ void playing_loop(models::Game* game)
 
 void update_state_loop(ULONG id)
 {
+    drivers::setup_interruption();
+
     while (true) {
         switch (g_game.curr_state) {
         case models::GlobalStates::PLAYING:

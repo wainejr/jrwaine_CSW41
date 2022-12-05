@@ -16,6 +16,7 @@
 #include "driverlib/gpio.h"
 #include "driverlib/pin_map.h"
 #include "driverlib/sysctl.h"
+#include "driverlib/interrupt.h"
 #include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
 
@@ -24,7 +25,9 @@
 
 namespace drivers {
 void setup_button();
+void setup_interruption();
 
 bool get_button_pressed();
+
 }
 #endif

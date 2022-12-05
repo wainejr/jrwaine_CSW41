@@ -17,13 +17,6 @@ void state_machine_playing()
     }
 }
 
-void state_machine_menu()
-{
-    if (drivers::get_button_pressed()) {
-        g_game.into_playing();
-    }
-}
-
 void actions_loop(ULONG id)
 {
     while (true) {
@@ -32,7 +25,7 @@ void actions_loop(ULONG id)
             state_machine_playing();
             break;
         case models::GlobalStates::MENU:
-            state_machine_menu();
+            // Handled by interruption
             break;
         default:
             break;

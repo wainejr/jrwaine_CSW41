@@ -1,5 +1,6 @@
 #include "../defines.h"
 #include "../models/Game.h"
+#include "../drivers/button.h"
 
 #ifndef _THREADS_UPDATE_STATE_H_
 #define _THREADS_UPDATE_STATE_H_
