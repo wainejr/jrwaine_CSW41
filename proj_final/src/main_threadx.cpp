@@ -34,13 +34,8 @@
  *
  *------------------------------------------------------------------------------*/
 
-#define THREAD_PERIOD(period_sec) (int)((period_sec)*TX_TIMER_TICKS_PER_SECOND)
-#define THREAD_DISPLAY_PERIOD THREAD_PERIOD(1.0f / view::globals::DESIRED_FPS)
-#define THREAD_AUDIO_PERIOD (THREAD_DISPLAY_PERIOD * 5)
-
 /* Define the ThreadX object control blocks...  */
 
-TX_THREAD thread_input;
 TX_THREAD g_thread_display;
 TX_THREAD g_thread_state;
 TX_THREAD g_thread_actions;
@@ -52,12 +47,7 @@ TX_TIMER g_timer_actions;
 
 TX_BYTE_POOL g_byte_pool;
 
-TX_BYTE_POOL byte_pool_0;
-TX_MUTEX mutex_0;
 TX_TIMER timer_display;
-TX_TIMER timer_state;
-TX_TIMER timer_input;
-TX_TIMER timer_ghosts[4];
 
 /* Define byte pool memory.  */
 
@@ -72,23 +62,6 @@ view::ViewGame g_view_game(&g_game);
  *      Functions and Methods
  *
  *------------------------------------------------------------------------------*/
-
-/* Define thread prototypes.  */
-
-void thread_display_entry(ULONG thread_id);
-void thread_state_entry(ULONG thread_id);
-void thread_input_entry(ULONG thread_id);
-void thread_audio_entry(ULONG thread_id);
-void thread_ghost_entry(ULONG thread_id);
-
-void thread_1_entry(ULONG reload);
-void thread_1_m_entry(ULONG reload);
-
-/* Define timer prototype.  */
-void timer_display_expiration(ULONG expiration_input);
-void timer_state_expiration(ULONG expiration_input);
-void timer_input_expiration(ULONG expiration_input);
-void timer_audio_expiration(ULONG expiration_input);
 
 /* Define main entry point.  */
 int main()

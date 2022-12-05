@@ -5,8 +5,9 @@
 
 void menu_loop(models::Game* game)
 {
-    // Sleep for 250ms
-    tx_thread_sleep((250 * TX_TIMER_TICKS_PER_SECOND) / 1000);
+    // Suspend
+    tx_thread_suspend(&g_thread_state);
+    // tx_thread_sleep((250 * TX_TIMER_TICKS_PER_SECOND) / 1000);
 }
 
 void showing_score_loop(models::Game* game)
@@ -36,7 +37,7 @@ void playing_loop(models::Game* game)
             break;
         }
 
-        tx_thread_sleep(THREAD_UPDATE_STATE_PERIOD);
+        tx_thread_suspend(&g_thread_state);
     }
 
     game->into_showing_score();
@@ -62,6 +63,10 @@ void update_state_loop(ULONG id)
     }
 }
 
+void timer_state_expiration(ULONG expiration_input){
+    tx_thread_resume(&g_thread_state);
+}
+
 void initialize_thread_update_state()
 {
     /* Memory pointer */
@@ -73,4 +78,8 @@ void initialize_thread_update_state()
     /* Create the thread for state  */
     tx_thread_create(&g_thread_state, "thread state", update_state_loop, 0, pointer,
         STACK_SIZE, 0, 0, TX_NO_TIME_SLICE, TX_AUTO_START);
+
+    /* Create the timer for display */
+    tx_timer_create(&g_timer_state, "timer state", timer_state_expiration, 1,
+        THREAD_UPDATE_STATE_PERIOD, THREAD_UPDATE_STATE_PERIOD, TX_AUTO_ACTIVATE);
 }

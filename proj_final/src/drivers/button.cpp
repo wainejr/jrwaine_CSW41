@@ -1,6 +1,9 @@
 #include "button.h"
+#include "../models/Game.h"
 
 using namespace drivers;
+
+extern models::Game gGame;
 
 void drivers::setup_button()
 {
