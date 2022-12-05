@@ -72,5 +72,5 @@ void initialize_thread_update_state()
 
     /* Create the thread for state  */
     tx_thread_create(&g_thread_state, "thread state", update_state_loop, 0, pointer,
-        STACK_SIZE, 0, 0, 5, TX_AUTO_START);
+        STACK_SIZE, 0, 0, TX_NO_TIME_SLICE, TX_AUTO_START);
 }

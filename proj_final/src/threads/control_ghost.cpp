@@ -189,6 +189,6 @@ void initialize_threads_control_ghosts()
         tx_byte_allocate(&g_byte_pool, (VOID**)&pointer, STACK_SIZE, TX_NO_WAIT);
         /* Create the thread for display  */
         tx_thread_create(&g_thread_ghosts[i], "thread ghost", control_ghost_loop, i, pointer,
-            STACK_SIZE, 0, 0, 1, TX_AUTO_START);
+            STACK_SIZE, 0, 0, TX_NO_TIME_SLICE, TX_AUTO_START);
     }
 }

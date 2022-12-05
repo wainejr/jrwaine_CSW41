@@ -2874,12 +2874,6 @@
                 <name>$PROJ_DIR$\src\drivers\button.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\src\drivers\buzzer.cpp</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\src\drivers\buzzer.h</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\src\drivers\cfaf128x128x16.c</name>
             </file>
             <file>
@@ -3041,9 +3035,6 @@
         </group>
         <file>
             <name>$PROJ_DIR$\src\defines.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\src\globals.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\src\main_threadx.cpp</name>

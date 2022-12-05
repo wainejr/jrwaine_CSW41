@@ -12,7 +12,6 @@
 
 #include "LCD.h"
 #include "button.h"
-#include "buzzer.h"
 #include "joystick.h"
 
 #ifndef _DRIVER_ALL_H_

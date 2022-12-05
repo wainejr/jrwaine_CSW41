@@ -56,7 +56,7 @@ void initialize_thread_actions()
 
     /* Create the thread for display  */
     tx_thread_create(&g_thread_actions, "thread actions", actions_loop, 0, pointer,
-        STACK_SIZE, 0, 0, 1, TX_AUTO_START);
+        STACK_SIZE, 0, 0, TX_NO_TIME_SLICE, TX_AUTO_START);
 
     /* Create the timer for display */
     tx_timer_create(&g_timer_actions, "timer actions", timer_actions_expiration, 1,

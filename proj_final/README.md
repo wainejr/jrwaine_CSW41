@@ -35,6 +35,11 @@ Most instances are related to the ones in "Models".
 
 Each view description can be found in files.
 
+### Constant values and parameters
+
+Most of constant values and parameters can be found in the files `models/consts.h` and `view/globals.h`.
+There are some defines for threads in `threads/` folder as well.
+
 ## Format files
 
 Install `clang-format` and run 
